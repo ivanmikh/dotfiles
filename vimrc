@@ -1,0 +1,357 @@
+" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+" the call to :runtime you can find below.  If you wish to change any of those
+" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+" will be overwritten everytime an upgrade of the vim packages is performed.
+" It is recommended to make changes after sourcing debian.vim since it alters
+" the value of the 'compatible' option.
+
+" This line should not be removed as it ensures that various options are
+" properly set to work with the Vim-related packages available in Debian.
+runtime! debian.vim
+
+runtime! ftplugin/man.vim
+
+" No Vi compatibility
+set nocompatible
+
+let mapleader = ","
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle
+filetype off
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Plugins
+Plugin 'Konfekt/FastFold'
+Plugin 'tpope/vim-commentary'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'justinmk/vim-syntax-extra'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'ericcurtin/CurtineIncSw.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Terminal
+
+" 256-color terminal
+" set t_Co=256
+set term=xterm-256color
+
+" Fast terminal connection
+set ttyfast
+
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+set background=dark
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Clipboard 
+
+" Use system clipboard
+" set clipboard=unnamed
+
+" Leave contents of system clipboard on exit
+autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
+
+" copy selection to system clipboard
+vnoremap ++ "+y
+
+" paste from system clipboard
+nmap ++ "+p
+
+" Copy filepath to system clipboard
+nmap <Leader>cp :let @+ = expand("%:p:a")<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keys and Tabs
+
+" Fix backspace
+set bs=indent,eol,start
+
+" Wrap on pressing bs, space or arrows
+set whichwrap=<,>,[,]
+
+" Number of lines to show around the cursor
+set scrolloff=10
+" Show tabs and trailing spaces
+set list
+set listchars=tab:→\ ,eol:¬,space:·,trail:-,extends:❯,precedes:❮
+set showbreak=↪
+
+" Tab control
+set expandtab               " insert tabs rather than spaces for <Tab>
+set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+set tabstop=4               " the visible width of tabs
+set softtabstop=4           " edit as if the tabs are 4 characters wide
+set shiftwidth=4            " number of spaces to use for indent and unindent
+set shiftround              " round indent to a multiple of 'shiftwidth'
+set completeopt+=longest
+
+set cindent
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Theme and View
+
+" Show partial command keys
+set showcmd
+
+" Set colorscheme
+colorscheme pixelmuerto
+" Set black background
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+highlight SignColumn ctermbg=NONE
+
+" Tab colors
+hi TabLine ctermfg=grey
+hi TabLineSel ctermfg=white
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Search
+
+" Recursive search
+set path+=**
+
+" Nice way to show search results
+set wildmenu
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+set showmatch       " Show matching brackets.
+set ignorecase      " Do case insensitive matching
+set smartcase       " Do smart case matching
+set incsearch       " Incremental search
+set autowrite       " Automatically save before commands like :next and :make
+set mouse=a         " Enable mouse usage (all modes)
+
+set number
+set relativenumber
+" highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" Search in selected text
+vnoremap <Leader>/ <Esc>/\%V
+" Search selected text
+vnoremap <expr> <Leader>// y/<C-R>*
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CScope
+
+if has('cscope')
+  set cscopetag
+
+  if has('quickfix')
+     set cscopequickfix=s-,c-,d-,i-,t-,e-
+  endif
+
+  cnoreabbrev csa cs add
+  cnoreabbrev csf cs find
+  cnoreabbrev csk cs kill
+  cnoreabbrev csr cs reset
+  cnoreabbrev css cs show
+  cnoreabbrev csh cs help
+
+  source /home/ivan/.vim/autoload/cscope_maps.vim
+
+  if filereadable("cscope.out")
+    cs add cscope.out
+  endif
+endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Splits
+
+" Alt tab windows
+" map T <C-W>w
+map H <C-W>h
+map L <C-W>l
+" Map shift+arrows to change windows
+map [1;2A <C-W>k
+map [1;2B <C-W>j
+map [1;2C <C-W>l
+map [1;2D <C-W>h
+
+" Open new split panes to right and bottom
+set splitbelow
+set splitright
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Buffers
+
+" Close buffer and keep split
+set hidden
+nnoremap <c-c> :bp\|bd #<CR>
+nnoremap <C-N> :MBEbn<CR>
+nnoremap <C-P> :MBEbp<CR>
+
+" MiniBufExplorer
+hi MBENormal               ctermfg=darkgrey guibg=fg
+hi MBEChanged              ctermfg=grey     guibg=fg
+hi MBEVisibleNormal        ctermfg=darkgrey guibg=fg
+hi MBEVisibleChanged       ctermfg=grey     guibg=fg
+hi MBEVisibleActiveNormal  ctermfg=cyan     guibg=fg
+hi MBEVisibleActiveChanged ctermfg=magenta  guibg=fg
+let g:miniBufExplMapWindowNavVim = 1 
+let g:miniBufExplMapWindowNavArrows = 1 
+let g:miniBufExplMapCTabSwitchBufs = 1 
+let g:miniBufExplModSelTarget = 1 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Opening a file
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Uncomment the following to have Vim load indentation rules and plugins
+" according to the detected filetype.
+if has("autocmd")
+  filetype plugin indent on
+endif
+
+set autoread
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Nerd Tree
+
+" Toggle NERDTree file browser
+map <F2> :NERDTreeToggle <CR>
+let NERDTreeMinimalUI  = 1
+let NERDTreeDirArrows  = 1
+let NERDTreeQuitOnOpen = 1
+" Close NERDTree if it is the only buffer left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TagList
+
+" Toggle Tags List
+map <F3> :Tlist<CR>
+let Tlist_Use_Right_Window = 1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Folding
+
+set foldmethod=manual
+set foldnestmax=10
+set nofoldenable
+set foldlevelstart=10
+
+" create fold for matching brace
+nnoremap <Leader>f V%zf
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Status line
+
+" hi User1 term=inverse,bold cterm=inverse,bold ctermfg=magenta
+" hi User2 term=inverse,bold cterm=inverse,bold ctermfg=darkgrey
+set laststatus=2
+set statusline=%2*CF:%F    " Path to the file
+set statusline+=\          " Insert space
+set statusline+=%1*%r      " Read only flag
+set statusline+=%2*\   " Gap
+set statusline+=%2*CWD:    " Print "CWD"
+set statusline+=%2*%{getcwd()} " Current working directory
+set statusline+=%2*%=      " Switch to the right side
+set statusline+=%P         " Percentage
+set statusline+=\ \ \      " Gap
+set statusline+=%l:%c      " Current line : column
+set statusline+=/          " Separator
+set statusline+=%L         " Total lines
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Source files navigation
+
+" Switch header/source
+map <F4> :call CurtineIncSw()<CR>
+
+" Switch declaration/definition
+map <F5> viwy<F4>/<C-R>*<CR>
+
+" YCM go to declaration
+nnoremap <Leader>d             :YcmCompleter GoToDeclaration<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Editing
+
+" Save file
+map <Esc><Esc> :w<CR>
+" Insert closing brace
+inoremap {{ {<CR>}<Esc>O
+" Space in normal mode
+map <space> i<space><esc>
+" Tab visual block selection
+vmap <Leader>t I<Tab><Esc>gv
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe
+
+let g:ycm_always_populate_location_list = 1
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_warning_symbol = '..'
+let g:ycm_error_symbol = '>>'
+
+highlight clear YcmWarningSign
+highlight clear YcmWarningLine
+highlight clear YcmWarningSection
+highlight clear YcmErrorSign
+highlight clear YcmErrorLine
+highlight clear YcmErrorSection
+
+let g:ycm_add_preview_to_completeopt=0
+set completeopt-=preview
+
+" Disable YCM for vimdiff
+"if &diff
+    let g:loaded_youcompleteme = 1
+"endif
+"highlight YcmWarningSign ctermfg=130
+
+let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
+
+nnoremap <F10>           :YcmForceCompileAndDiagnostics<CR>
+"nnoremap <Leader>i      :YcmCompleter GoToInclude<CR>
+"nnoremap <Leader>gip    :YcmCompleter GoToImprecise<CR>
+"nnoremap <Leader>f      :YcmCompleter FixIt<CR>"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Misc
+
+" Block Ctrl-Z
+nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
+
+" Directory for .swap files
+set directory=/home/ivan/.vim/swap/
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
