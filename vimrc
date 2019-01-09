@@ -332,9 +332,9 @@ let g:ycm_add_preview_to_completeopt=0
 set completeopt-=preview
 
 " Disable YCM for vimdiff
-"if &diff
+if &diff
     let g:loaded_youcompleteme = 1
-"endif
+endif
 "highlight YcmWarningSign ctermfg=130
 
 let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
