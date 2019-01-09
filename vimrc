@@ -352,6 +352,6 @@ nnoremap <F10>           :YcmForceCompileAndDiagnostics<CR>
 nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 
 " Directory for .swap files
-set directory=/home/ivan/.vim/swap/
+set directory=~/.vim/swap/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
