@@ -169,7 +169,7 @@ if has('cscope')
   cnoreabbrev css cs show
   cnoreabbrev csh cs help
 
-  source /home/ivan/.vim/autoload/cscope_maps.vim
+  source ~/.vim/autoload/cscope_maps.vim
 
   if filereadable("cscope.out")
     cs add cscope.out
@@ -352,6 +352,6 @@ nnoremap <F10>           :YcmForceCompileAndDiagnostics<CR>
 nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 
 " Directory for .swap files
-set directory=/home/ivan/.vim/swap/
+set directory=~/.vim/swap/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

@@ -114,10 +114,6 @@ alias del=trash
 alias rm='echo "Use 'del' (trash-cli), or the full path i.e. /bin/rm"'
 alias sudo='sudo '
 
-ARMGCC4=/home/ivan/Documents/bbb/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
-ARMGCC5=/home/ivan/Documents/bbb/gcc-linaro-5.5.0-2017.10-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
-ARMGCC=/home/ivan/Documents/bbb/buildroot-2018.02/output/host/bin/arm-linux-gnueabihf-
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
