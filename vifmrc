@@ -123,6 +123,7 @@ mark h ~/
 mark s /mnt/hgfs/linux_vm_shared/
 mark r /mnt/hgfs/repo/
 mark d ~/Documents/
+mark p ~/Documents/projects
 mark f /
 
 " ------------------------------------------------------------------------------
