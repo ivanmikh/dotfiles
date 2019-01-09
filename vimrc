@@ -169,7 +169,7 @@ if has('cscope')
   cnoreabbrev css cs show
   cnoreabbrev csh cs help
 
-  source /home/ivan/.vim/autoload/cscope_maps.vim
+  source ~/.vim/autoload/cscope_maps.vim
 
   if filereadable("cscope.out")
     cs add cscope.out
