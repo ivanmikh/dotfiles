@@ -178,8 +178,8 @@ command! reload :write | restart
 " program.
 
 " Pdf
-filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
-fileviewer *.pdf pdftotext -nopgbrk %c -
+filextype *.pdf evince %c
+fileviewer *.pdf evince %c
 
 " PostScript
 filextype *.ps,*.eps,*.ps.gz
@@ -455,6 +455,13 @@ nnoremap <f5> :copy<cr>
 nnoremap <f6> :move<cr>
 nnoremap <f7> :mkdir<space>
 nnoremap <f8> :delete<cr>
+
+" Location history
+nnoremap ,h :history<CR>
+
+" Run
+nnoremap rr :run<CR>
+nnoremap rs :!sudo ./%c<CR>
 
 " ------------------------------------------------------------------------------
 

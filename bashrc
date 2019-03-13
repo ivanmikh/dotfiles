@@ -111,7 +111,6 @@ alias bashrc='vim ~/.bashrc'
 alias ycmconf='vim ~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 
 alias del=trash
-alias rm='echo "Use 'del' (trash-cli), or the full path i.e. /bin/rm"'
 alias sudo='sudo '
 
 # Add an "alert" alias for long running commands.  Use like so:
