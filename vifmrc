@@ -463,6 +463,9 @@ nnoremap ,h :history<CR>
 nnoremap rr :run<CR>
 nnoremap rs :!sudo ./%c<CR>
 
+nnoremap <C-N> :histnext<CR>
+nnoremap <C-P> :histprev<CR>
+
 " ------------------------------------------------------------------------------
 
 " Various customization examples
