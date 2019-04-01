@@ -38,6 +38,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'justinmk/vim-syntax-extra'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'ericcurtin/CurtineIncSw.vim'
+Plugin 'davidhalter/jedi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

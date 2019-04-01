@@ -467,6 +467,9 @@ nnoremap rs :!sudo ./%c
 nnoremap ra :!./%c
 nnoremap rt :!terminator --new-tab -e ./%c<CR>
 
+nnoremap <C-N> :histnext<CR>
+nnoremap <C-P> :histprev<CR>
+
 " ------------------------------------------------------------------------------
 
 " Various customization examples
