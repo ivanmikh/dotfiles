@@ -102,16 +102,15 @@ alias l='ls -CF'
 alias copy='xclip -sel clip'
 
 # Quick access to the repo
-alias cdrepo='cd /mnt/hgfs/repo'
-alias tc3000='cd /mnt/hgfs/repo/tc3000/src'
-alias mtp300='cd /mnt/hgfs/repo/mtp300/src'
-alias tcdspb='cd /mnt/hgfs/repo/tc_dspb/src'
 alias vimrc='vim ~/.vimrc'
-alias bashrc='vim ~/.bashrc'
-alias ycmconf='vim ~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+alias bashrc='vim ~/.bashrc && source ~/.bashrc'
 
 alias del=trash
 alias sudo='sudo '
+
+# ssh
+MTP300='root@192.168.20.121'
+JENKINS='ivan@192.168.13.85'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

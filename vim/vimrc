@@ -171,9 +171,9 @@ if has('cscope')
 
   source ~/.vim/autoload/cscope_maps.vim
 
-  if filereadable("cscope.out")
-    cs add cscope.out
-  endif
+  " if filereadable("cscope.out")
+  "   cs add cscope.out
+  " endif
 endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -222,8 +222,8 @@ let g:miniBufExplModSelTarget = 1
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+if has("autocmd") && (! &diff)
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Uncomment the following to have Vim load indentation rules and plugins

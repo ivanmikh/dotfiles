@@ -1,0 +1,60 @@
+[global_config]
+  geometry_hinting = True
+  scroll_tabbar = True
+  title_transmit_bg_color = "#0087a4"
+[keybindings]
+  go_down = <Alt>j
+  go_left = <Alt>h
+  go_right = <Alt>l
+  go_up = <Alt>k
+  layout_launcher = <Shift><Alt>l
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+  [[VIFM]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = a4cf75d3-a047-4fe7-923f-e4f6a96a6355
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 0:0
+      size = 1920, 935
+      title = ivan@ubuntuvm: ~/Documents
+      type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 958
+      ratio = 0.500261096606
+      type = HPaned
+    [[[terminal2]]]
+      command = vifm
+      order = 0
+      parent = child1
+      profile = default
+      type = Terminal
+      uuid = a4cf75d3-a047-4fe7-923f-e4f6a96a6355
+    [[[terminal3]]]
+      command = vim --servername VIM
+      order = 1
+      parent = child1
+      profile = default
+      type = Terminal
+      uuid = ec744a62-5aec-41c2-8d5d-86003df90300
+[plugins]
+[profiles]
+  [[default]]
+    cursor_color = "#aaaaaa"
+    font = Monospace 10
+    icon_bell = False
+    palette = "#2e3436:#0ba1ae:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#0f9880:#9bc6a5:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    scrollback_infinite = True
+    scrollbar_position = hidden
