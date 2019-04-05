@@ -1,16 +1,16 @@
 #!/bin/bash
 
-home=$(pwd)
-list=svndiff.txt
+CWD=$(pwd)
+LIST="${CWD}/svndiff.txt"
 
-svn diff --summarize | awk '{print $2}' > $list
-if [ -s $list ]; then
-    vim $list
+svn diff --summarize | awk '{print $2}' > $LIST
+if [ -s $LIST ]; then
+    vim $LIST
 else
     echo "No differences found!"
 fi
 
-for file in $(cat $list); do
+for file in $(cat $LIST); do
     echo "Next file is $file"
     echo "Press: 'Enter' to see diff"
     echo "       'q'     to exit"
@@ -25,10 +25,10 @@ for file in $(cat $list); do
 done
 
 if [ "update" == "$1" ]; then
-    for file in $(cat $list); do
+    for file in $(cat $LIST); do
         svn update $file
     done
 elif [ "commit" == "$1" ]; then
-    svn commit --targets $list
+    svn commit --targets $LIST
 fi
 

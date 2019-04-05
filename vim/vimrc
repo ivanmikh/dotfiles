@@ -80,7 +80,7 @@ nmap <Leader>cp :let @+ = expand("%:p:a")<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Keys and Tabs
+" Keys and spaces
 
 " Fix backspace
 set bs=indent,eol,start
@@ -194,6 +194,7 @@ map [1;2D <C-W>h
 " Open new split panes to right and bottom
 set splitbelow
 set splitright
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -281,8 +282,9 @@ set statusline+=%2*\   " Gap
 set statusline+=%2*CWD:    " Print "CWD"
 set statusline+=%2*%{getcwd()} " Current working directory
 set statusline+=%2*%=      " Switch to the right side
+set statusline+=\ \        " Gap
 set statusline+=%P         " Percentage
-set statusline+=\ \ \      " Gap
+set statusline+=\ \        " Gap
 set statusline+=%l:%c      " Current line : column
 set statusline+=/          " Separator
 set statusline+=%L         " Total lines
