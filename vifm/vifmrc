@@ -137,15 +137,15 @@ mark f /
 " %m run the command in a menu window
 
 command! df df -h %m 2> /dev/null
-command! diff vim -d %f %F
+command! diff :!terminator --new-tab -e vim\ -d\ %f\ %F
 command! zip zip -r %f.zip %f
-command! run !! ./%f
+command! run !! ./%f %a
 command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart
-command! ssh :!terminator --new-tab -e ~/ssh.sh &
-command! svndiff :!~/Documents/utils/dotfiles/svn/svndiff.sh
+command! ssh :!terminator --new-tab -e ~/ssh.sh\ %a
+command! svndiff :!terminator --new-tab -e ~/Documents/utils/dotfiles/svn/svndiff.sh\ %a
 
 " ------------------------------------------------------------------------------
 
@@ -465,7 +465,7 @@ nnoremap <C-P> :histprev<CR>
 " Run
 nnoremap rr :run<CR>
 nnoremap rs :!sudo ./%c
-nnoremap ra :!./%c
+nnoremap ra :!./%c 
 nnoremap rt :!terminator --new-tab -e ./%c<CR>
 
 nnoremap <C-N> :histnext<CR>

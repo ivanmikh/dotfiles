@@ -104,6 +104,7 @@ alias copy='xclip -sel clip'
 # Quick access to the repo
 alias vimrc='vim ~/.vimrc'
 alias bashrc='vim ~/.bashrc && source ~/.bashrc'
+alias vimserver='vim --servername VIM'
 
 alias del=trash
 alias sudo='sudo '

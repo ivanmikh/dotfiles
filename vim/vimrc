@@ -14,7 +14,7 @@ runtime! ftplugin/man.vim
 " No Vi compatibility
 set nocompatible
 
-let mapleader = ","
+let mapleader = ";"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle
 filetype off
@@ -36,9 +36,13 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'justinmk/vim-syntax-extra'
-Plugin 'fholgado/minibufexpl.vim'
 Plugin 'ericcurtin/CurtineIncSw.vim'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'jiangmiao/auto-pairs'
+" Plugin 'davidhalter/jedi-vim'
+" Plugin 'fholgado/minibufexpl.vim'
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'bling/vim-bufferline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -202,21 +206,31 @@ set splitright
 
 " Close buffer and keep split
 set hidden
-nnoremap <c-c> :bp\|bd #<CR>
-nnoremap <C-N> :MBEbn<CR>
-nnoremap <C-P> :MBEbp<CR>
+"nnoremap <c-c> :bp\|bd #<CR>
+nnoremap <c-c> :bd!<CR>
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
+nnoremap gb :ls<CR>:b<space>
 
 " MiniBufExplorer
-hi MBENormal               ctermfg=darkgrey guibg=fg
-hi MBEChanged              ctermfg=grey     guibg=fg
-hi MBEVisibleNormal        ctermfg=darkgrey guibg=fg
-hi MBEVisibleChanged       ctermfg=grey     guibg=fg
-hi MBEVisibleActiveNormal  ctermfg=cyan     guibg=fg
-hi MBEVisibleActiveChanged ctermfg=magenta  guibg=fg
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1 
+"hi MBENormal               ctermfg=darkgrey guibg=fg
+"hi MBEChanged              ctermfg=grey     guibg=fg
+"hi MBEVisibleNormal        ctermfg=darkgrey guibg=fg
+"hi MBEVisibleChanged       ctermfg=grey     guibg=fg
+"hi MBEVisibleActiveNormal  ctermfg=cyan     guibg=fg
+"hi MBEVisibleActiveChanged ctermfg=magenta  guibg=fg
+"let g:miniBufExplMapWindowNavVim = 1 
+"let g:miniBufExplMapWindowNavArrows = 1 
+"let g:miniBufExplMapCTabSwitchBufs = 1 
+"let g:miniBufExplModSelTarget = 1 
+"
+" Bufferline
+" let g:bufferline_echo = 0
+" let g:bufferline_rotate = 2
+" let g:bufferline_fixed_index = -1 "always last
+" let g:bufferline_show_bufnr = 0
+" let g:airline_section_x = ''
+" let g:airline_section_y = ''
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -242,8 +256,7 @@ set autoread
 
 " Toggle NERDTree file browser
 map <F2> :NERDTreeToggle <CR>
-let NERDTreeMinimalUI  = 1
-let NERDTreeDirArrows  = 1
+let NERDTreeMinimalUI  = 0
 let NERDTreeQuitOnOpen = 1
 " Close NERDTree if it is the only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -288,6 +301,12 @@ set statusline+=\ \        " Gap
 set statusline+=%l:%c      " Current line : column
 set statusline+=/          " Separator
 set statusline+=%L         " Total lines
+
+" Airline
+" let g:airline_theme='badcat'
+" let g:airline#extensions#bufferline#enabled = 1
+" let g:airline#extensions#bufferline#overwrite_variables = 1
+" let g:airline#extensions#whitespace#enabled = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -305,18 +324,23 @@ nnoremap <Leader>d             :YcmCompleter GoToDeclaration<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
-
 " Save file
 map <Esc><Esc> :w<CR>
 " Insert closing brace
-inoremap {{ {<CR>}<Esc>O
+inoremap {{ {<CR>}<Esc>O<Tab>
+" Enclose word
+nnoremap <Leader>( wbi(<esc>ea)<esc>
+nnoremap <Leader>{ wbi{<esc>ea}<esc>
+nnoremap <Leader>" wbi"<esc>ea"<esc>
+nnoremap <Leader>' wbi'<esc>ea'<esc>
+nnoremap <Leader><space> wbi<space><esc>ea<space><esc>
+" Remove Enclosing
+nnoremap <Leader>re wbhxelx
 " Space in normal mode
-map <space> i<space><esc>
-" Tab visual block selection
-vmap <Leader>t I<Tab><Esc>gv
+" map <space> i<space><esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
 
 let g:ycm_always_populate_location_list = 1
@@ -356,5 +380,8 @@ nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 
 " Directory for .swap files
 set directory=~/.vim/swap/
+
+" echo filepath
+nnoremap ,f :echo expand('%:p')<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
