@@ -207,10 +207,12 @@ set splitright
 " Close buffer and keep split
 set hidden
 "nnoremap <c-c> :bp\|bd #<CR>
-nnoremap <c-c> :bd!<CR>
+nnoremap <c-c> :bd<CR>
 nnoremap <C-N> :bn<CR>
 nnoremap <C-P> :bp<CR>
 nnoremap gb :ls<CR>:b<space>
+nnoremap gvb :ls<CR>:vert sb<space>
+nnoremap gsb :ls<CR>:sb<space>
 
 " MiniBufExplorer
 "hi MBENormal               ctermfg=darkgrey guibg=fg
@@ -284,19 +286,22 @@ nnoremap <Leader>f V%zf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Status line
-
-" hi User1 term=inverse,bold cterm=inverse,bold ctermfg=magenta
-" hi User2 term=inverse,bold cterm=inverse,bold ctermfg=darkgrey
-set laststatus=2
-set statusline=%2*CF:%F    " Path to the file
+" au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
+" au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
+set laststatus=2           " enable status line always
+set statusline=[%n]        " Buffer number
 set statusline+=\          " Insert space
-set statusline+=%1*%r      " Read only flag
-set statusline+=%2*\   " Gap
-set statusline+=%2*CWD:    " Print "CWD"
-set statusline+=%2*%{getcwd()} " Current working directory
-set statusline+=%2*%=      " Switch to the right side
+set statusline+=CF:%F      " Path to the file
+set statusline+=\          " Insert space
+set statusline+=%r         " Read only flag
+set statusline+=%9*\       " Gap
+set statusline+=%9*CWD:    " Print "CWD"
+set statusline+=%9*%{getcwd()} " Current working directory
+set statusline+=%9*%=      " Switch to the right side
 set statusline+=\ \        " Gap
-set statusline+=%P         " Percentage
+set statusline+=%9*%m      " Modified
+set statusline+=\ \        " Insert space
+set statusline+=%9*%P         " Percentage
 set statusline+=\ \        " Gap
 set statusline+=%l:%c      " Current line : column
 set statusline+=/          " Separator
