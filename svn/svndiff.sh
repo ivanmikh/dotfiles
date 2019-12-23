@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CWD=$(pwd)
-LIST="${CWD}/svndiff.txt"
+DIR_NAME=$(basename $CWD)
+LIST="/tmp/svndiff_${DIR_NAME}.txt"
 
 svn diff --summarize | awk '{print $2}' > $LIST
 if [ -s $LIST ]; then

@@ -10,7 +10,6 @@
 runtime! debian.vim
 
 runtime! ftplugin/man.vim
-
 " No Vi compatibility
 set nocompatible
 
@@ -47,7 +46,6 @@ Plugin 'ericcurtin/CurtineIncSw.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Terminal
@@ -62,7 +60,19 @@ set ttyfast
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 set background=dark
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Movement
+
+" Move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+nnoremap <down> gj
+nnoremap <up> gk
+
+" Move to beginning/end of line
+nmap <Home> ^
+nmap <End> $
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Clipboard 
@@ -81,7 +91,11 @@ nmap ++ "+p
 
 " Copy filepath to system clipboard
 nmap <Leader>cp :let @+ = expand("%:p:a")<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Paste/delete without yanking selected
+vnoremap p "_dP
+nnoremap x "_x
+vnoremap x "_x
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keys and spaces
@@ -109,7 +123,6 @@ set shiftround              " round indent to a multiple of 'shiftwidth'
 set completeopt+=longest
 
 set cindent
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme and View
@@ -127,7 +140,6 @@ highlight SignColumn ctermbg=NONE
 " Tab colors
 hi TabLine ctermfg=grey
 hi TabLineSel ctermfg=white
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Search
@@ -155,7 +167,6 @@ set relativenumber
 vnoremap <Leader>/ <Esc>/\%V
 " Search selected text
 vnoremap <expr> <Leader>// y/<C-R>*
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CScope
@@ -180,7 +191,6 @@ if has('cscope')
   "   cs add cscope.out
   " endif
 endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Splits
@@ -198,8 +208,6 @@ map [1;2D <C-W>h
 " Open new split panes to right and bottom
 set splitbelow
 set splitright
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Buffers
@@ -233,7 +241,6 @@ nnoremap gsb :ls<CR>:sb<space>
 " let g:bufferline_show_bufnr = 0
 " let g:airline_section_x = ''
 " let g:airline_section_y = ''
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Opening a file
@@ -251,7 +258,6 @@ if has("autocmd")
 endif
 
 set autoread
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nerd Tree
@@ -259,10 +265,9 @@ set autoread
 " Toggle NERDTree file browser
 map <F2> :NERDTreeToggle <CR>
 let NERDTreeMinimalUI  = 0
-let NERDTreeQuitOnOpen = 1
+let NERDTreeQuitOnOpen = 0
 " Close NERDTree if it is the only buffer left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TagList
@@ -270,7 +275,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Toggle Tags List
 map <F3> :Tlist<CR>
 let Tlist_Use_Right_Window = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
@@ -282,7 +286,6 @@ set foldlevelstart=10
 
 " create fold for matching brace
 nnoremap <Leader>f V%zf
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Status line
@@ -312,7 +315,6 @@ set statusline+=%L         " Total lines
 " let g:airline#extensions#bufferline#enabled = 1
 " let g:airline#extensions#bufferline#overwrite_variables = 1
 " let g:airline#extensions#whitespace#enabled = 0
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Source files navigation
@@ -325,25 +327,23 @@ map <F5> viwy<F4>/<C-R>*<CR>
 
 " YCM go to declaration
 nnoremap <Leader>d             :YcmCompleter GoToDeclaration<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
 " Save file
 map <Esc><Esc> :w<CR>
 " Insert closing brace
-inoremap {{ {<CR>}<Esc>O<Tab>
+inoremap {<CR> {<CR>}<Esc>O
 " Enclose word
-nnoremap <Leader>( wbi(<esc>ea)<esc>
-nnoremap <Leader>{ wbi{<esc>ea}<esc>
-nnoremap <Leader>" wbi"<esc>ea"<esc>
-nnoremap <Leader>' wbi'<esc>ea'<esc>
+nnoremap <Leader>( wbi(<esc>Ea)<esc>
+nnoremap <Leader>{ wbi{<esc>Ea}<esc>
+nnoremap <Leader>" wbi"<esc>Ea"<esc>
+nnoremap <Leader>' wbi'<esc>Ea'<esc>
 nnoremap <Leader><space> wbi<space><esc>ea<space><esc>
 " Remove Enclosing
 nnoremap <Leader>re wbhxelx
 " Space in normal mode
-" map <space> i<space><esc>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <space> a<space><esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
@@ -356,26 +356,26 @@ let g:ycm_error_symbol = '>>'
 highlight clear YcmWarningSign
 highlight clear YcmWarningLine
 highlight clear YcmWarningSection
-highlight clear YcmErrorSign
-highlight clear YcmErrorLine
-highlight clear YcmErrorSection
+" highlight clear YcmErrorSign
+" highlight clear YcmErrorLine
+" highlight clear YcmErrorSection
+highlight YcmWarningSign ctermfg=11
+" highlight YcmWarningSign ctermbg=0
 
 let g:ycm_add_preview_to_completeopt=0
 set completeopt-=preview
 
 " Disable YCM for vimdiff
 if &diff
-    let g:loaded_youcompleteme = 1
+  let g:loaded_youcompleteme = 1
 endif
-"highlight YcmWarningSign ctermfg=130
 
 let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
 
 nnoremap <F10>           :YcmForceCompileAndDiagnostics<CR>
-"nnoremap <Leader>i      :YcmCompleter GoToInclude<CR>
-"nnoremap <Leader>gip    :YcmCompleter GoToImprecise<CR>
-"nnoremap <Leader>f      :YcmCompleter FixIt<CR>"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <Leader>gdc     :YcmCompleter GoToDeclaration<CR>
+nnoremap <Leader>gdf     :YcmCompleter GoToDefinition<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
@@ -387,6 +387,11 @@ nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 set directory=~/.vim/swap/
 
 " echo filepath
-nnoremap ,f :echo expand('%:p')<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>cfp :let @+=expand("%:p")<CR>
+nnoremap <leader>cfn :let @+=expand("%")<CR>
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
+" Quit without saving
+cmap qq q!

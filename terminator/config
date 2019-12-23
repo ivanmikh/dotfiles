@@ -7,10 +7,10 @@
   suppress_multiple_term_dialog = True
   title_transmit_bg_color = "#0087a4"
 [keybindings]
-  cycle_next = None
-  cycle_prev = None
-  go_next = <Alt>l
-  go_prev = <Alt>h
+  cycle_next = <Primary>Tab
+  cycle_prev = <Primary><Shift>Tab
+  go_next = None
+  go_prev = None
   layout_launcher = <Shift><Alt>l
   next_tab = <Primary>Page_Down
   prev_tab = <Primary>Page_Up
