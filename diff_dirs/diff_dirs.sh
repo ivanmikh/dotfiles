@@ -19,10 +19,11 @@ else
     exit 1
 fi 
 
+script_dir=$(readlink -f $(basename $0))
 dir1_list=/tmp/dir1_list.txt
 dir2_list=/tmp/dir2_list.txt
 diff=files_diff
-exclude_pat=/home/ivan/Documents/diff_dirs/exclude_diff
+exclude_pat="${script_dir}/exclude_diff"
 
 diff -uwBNrq -X $exclude_pat $dir1 $dir2 | awk '{print $2}' > $dir1_list
 diff -uwBNrq -X $exclude_pat $dir1 $dir2 | awk '{print $4}' > $dir2_list

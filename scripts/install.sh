@@ -3,7 +3,8 @@
 set -e
 set -x
 
-dotfiles=$(readlink -f ~/Documents/utils/dotfiles)
+script_dir=$(readlink -f $(dirname $0))
+dotfiles=$(readlink -f "${script_dir}/..")
 home=$(readlink -f ~/)
 cwd=$(readlink -f $(pwd))
 
@@ -16,7 +17,6 @@ vifmrc=$vifm/vifmrc
 
 function MAIN() {
     BASHRC
-    VIFMRC
     VIMRC
     VIM
     YCM

@@ -15,44 +15,37 @@ set nocompatible
 
 let mapleader = ";"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle
-filetype off
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" vim-plug
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plugin 'Konfekt/FastFold'
-Plugin 'tpope/vim-commentary'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'justinmk/vim-syntax-extra'
-Plugin 'ericcurtin/CurtineIncSw.vim'
-" Plugin 'jiangmiao/auto-pairs'
-" Plugin 'davidhalter/jedi-vim'
-" Plugin 'fholgado/minibufexpl.vim'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
-" Plugin 'bling/vim-bufferline'
+Plug 'Konfekt/FastFold'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree'
+Plug 'Valloric/YouCompleteMe'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'vim-scripts/taglist.vim'
+Plug 'ericcurtin/CurtineIncSw.vim'
+"Plugin 'octol/vim-cpp-enhanced-highlight'
+"Plugin 'justinmk/vim-syntax-extra'
+"Plugin 'jiangmiao/auto-pairs'
+"Plugin 'davidhalter/jedi-vim'
+"Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'bling/vim-bufferline'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Initialize plugin system
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Terminal
 
 " 256-color terminal
-" set t_Co=256
-set term=xterm-256color
+set t_Co=256
 
 " Fast terminal connection
 set ttyfast
@@ -60,8 +53,7 @@ set ttyfast
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 set background=dark
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Movement
 
 " Move vertically by visual line
@@ -74,7 +66,7 @@ nnoremap <up> gk
 nmap <Home> ^
 nmap <End> $
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Clipboard 
 
 " Use system clipboard
@@ -97,7 +89,7 @@ vnoremap p "_dP
 nnoremap x "_x
 vnoremap x "_x
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keys and spaces
 
 " Fix backspace
@@ -124,28 +116,26 @@ set completeopt+=longest
 
 set cindent
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme and View
 
 " Show partial command keys
 set showcmd
 
 " Set colorscheme
-colorscheme pixelmuerto
-" Set black background
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
-highlight SignColumn ctermbg=NONE
+colorscheme wombat256
 
 " Tab colors
 hi TabLine ctermfg=grey
 hi TabLineSel ctermfg=white
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Search
+set termguicolors
 
-" Recursive search
-set path+=**
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Search
+
+"" Recursive search
+"set path+=**
 
 " Nice way to show search results
 set wildmenu
@@ -168,7 +158,7 @@ vnoremap <Leader>/ <Esc>/\%V
 " Search selected text
 vnoremap <expr> <Leader>// y/<C-R>*
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CScope
 
 if has('cscope')
@@ -192,7 +182,7 @@ if has('cscope')
   " endif
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Splits
 
 " Alt tab windows
@@ -209,7 +199,7 @@ map [1;2D <C-W>h
 set splitbelow
 set splitright
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Buffers
 
 " Close buffer and keep split
@@ -242,7 +232,7 @@ nnoremap gsb :ls<CR>:sb<space>
 " let g:airline_section_x = ''
 " let g:airline_section_y = ''
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Opening a file
 
 " Uncomment the following to have Vim jump to the last position when
@@ -259,7 +249,7 @@ endif
 
 set autoread
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nerd Tree
 
 " Toggle NERDTree file browser
@@ -267,16 +257,16 @@ map <F2> :NERDTreeToggle <CR>
 let NERDTreeMinimalUI  = 0
 let NERDTreeQuitOnOpen = 0
 " Close NERDTree if it is the only buffer left
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TagList
 
 " Toggle Tags List
 map <F3> :Tlist<CR>
 let Tlist_Use_Right_Window = 1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
 
 set foldmethod=manual
@@ -287,7 +277,7 @@ set foldlevelstart=10
 " create fold for matching brace
 nnoremap <Leader>f V%zf
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Status line
 " au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
 " au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
@@ -316,7 +306,7 @@ set statusline+=%L         " Total lines
 " let g:airline#extensions#bufferline#overwrite_variables = 1
 " let g:airline#extensions#whitespace#enabled = 0
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Source files navigation
 
 " Switch header/source
@@ -325,10 +315,7 @@ map <F4> :call CurtineIncSw()<CR>
 " Switch declaration/definition
 map <F5> viwy<F4>/<C-R>*<CR>
 
-" YCM go to declaration
-nnoremap <Leader>d             :YcmCompleter GoToDeclaration<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
 " Save file
 map <Esc><Esc> :w<CR>
@@ -343,13 +330,13 @@ nnoremap <Leader><space> wbi<space><esc>ea<space><esc>
 " Remove Enclosing
 nnoremap <Leader>re wbhxelx
 " Space in normal mode
-map <space> a<space><esc>
+map <space> i<space><esc>l
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
 
 let g:ycm_always_populate_location_list = 1
-let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf='/home/ivan/Documents/dotfiles/vim/ycm_extra_conf.py'
 let g:ycm_warning_symbol = '..'
 let g:ycm_error_symbol = '>>'
 
@@ -359,8 +346,7 @@ highlight clear YcmWarningSection
 " highlight clear YcmErrorSign
 " highlight clear YcmErrorLine
 " highlight clear YcmErrorSection
-highlight YcmWarningSign ctermfg=11
-" highlight YcmWarningSign ctermbg=0
+highlight YcmWarningSign ctermfg=Cyan guifg=Cyan
 
 let g:ycm_add_preview_to_completeopt=0
 set completeopt-=preview
@@ -371,13 +357,15 @@ if &diff
 endif
 
 let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
+let g:ycm_server_python_interpreter='/usr/bin/python'
 
-nnoremap <F10>           :YcmForceCompileAndDiagnostics<CR>
-nnoremap <Leader>gdc     :YcmCompleter GoToDeclaration<CR>
-nnoremap <Leader>gdf     :YcmCompleter GoToDefinition<CR>
+command GoToDec YcmCompleter GoToDeclaration
+command GoToDef YcmCompleter GoToDefinition
 
+command YcmLoad   let g:loaded_youcompleteme = 1
+command YcmUnload let g:loaded_youcompleteme = 0
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 
 " Block Ctrl-Z
@@ -391,7 +379,13 @@ nnoremap <leader>cfp :let @+=expand("%:p")<CR>
 nnoremap <leader>cfn :let @+=expand("%")<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
+command W w !sudo tee > /dev/null %
 
 " Quit without saving
-cmap qq q!
+command Q q!
+
+" Disable search highlight
+nnoremap <leader>h :nohlsearch<CR>
+
+" Run current file
+nnoremap <leader>r :w<CR>:! ./% 

@@ -102,12 +102,15 @@ alias l='ls -CF'
 alias copy='xclip -sel clip'
 
 # Quick access to the repo
-alias vimrc='vim ~/.vimrc'
-alias bashrc='vim ~/.bashrc && source ~/.bashrc'
+alias vimrc='nvim  ~/.vimrc'
+alias bashrc='nvim  ~/.bashrc && source ~/.bashrc'
 alias vimserver='vim --servername VIM'
 
 alias del=trash
 alias sudo='sudo '
+
+# Ranger, exit to current folder
+alias fm='ranger --choosedir=$HOME/.config/ranger/rangerdir; LASTDIR=`cat $HOME/.config/ranger/rangerdir`; cd "$LASTDIR"'
 
 VM_SHARE="/mnt/hgfs/linux_vm_shared/"
 
