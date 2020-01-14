@@ -6,7 +6,7 @@ LIST="/tmp/svndiff_${DIR_NAME}.txt"
 
 svn diff --summarize | awk '{print $2}' > $LIST
 if [ -s $LIST ]; then
-    vim $LIST
+    nvim $LIST
 else
     echo "No differences found!"
 fi
