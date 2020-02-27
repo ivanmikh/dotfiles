@@ -29,6 +29,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'vim-scripts/taglist.vim'
 Plug 'ericcurtin/CurtineIncSw.vim'
+Plug '/usr/share/gocode/src/github.com/junegunn/fzf'
 "Plugin 'octol/vim-cpp-enhanced-highlight'
 "Plugin 'justinmk/vim-syntax-extra'
 "Plugin 'jiangmiao/auto-pairs'
@@ -76,10 +77,14 @@ nmap <End> $
 autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
 
 " copy selection to system clipboard
-vnoremap ++ "+y
+vnoremap +p "+p
+vnoremap +y "+y
+vnoremap +d "+d
 
 " paste from system clipboard
-nmap ++ "+p
+nnoremap +p "+p
+nnoremap +y "+y
+nnoremap +d "+d
 
 " Copy filepath to system clipboard
 nmap <Leader>cp :let @+ = expand("%:p:a")<CR>
@@ -163,6 +168,7 @@ vnoremap <expr> <Leader>// y/<C-R>*
 
 if has('cscope')
   set cscopetag
+  set nocscopeverbose
 
   if has('quickfix')
      set cscopequickfix=s-,c-,d-,i-,t-,e-
@@ -343,9 +349,9 @@ let g:ycm_error_symbol = '>>'
 highlight clear YcmWarningSign
 highlight clear YcmWarningLine
 highlight clear YcmWarningSection
-" highlight clear YcmErrorSign
-" highlight clear YcmErrorLine
-" highlight clear YcmErrorSection
+highlight clear YcmErrorSign
+highlight clear YcmErrorLine
+highlight clear YcmErrorSection
 highlight YcmWarningSign ctermfg=Cyan guifg=Cyan
 
 let g:ycm_add_preview_to_completeopt=0
@@ -389,3 +395,6 @@ nnoremap <leader>h :nohlsearch<CR>
 
 " Run current file
 nnoremap <leader>r :w<CR>:! ./% 
+
+" Compile and run
+command GccRun :!g++ % && ./a.out

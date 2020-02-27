@@ -90,20 +90,23 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # colored o+w directories
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 
-# Run Nautilus without desktop
-alias nautilus='nautilus --no-desktop &'
+export FZF_DEFAULT_OPTS='--layout=reverse --border --exact -m'
+export EDITOR='nvim'
+export TERMCMD='alacritty'
 
 # some more ls aliases
 alias ll='ls -Flh'
 alias la='ls -FlAh'
 alias l='ls -CF'
 
+alias e='$EDITOR '
+
 # Copy to clipboard
 alias copy='xclip -sel clip'
 
 # Quick access to the repo
-alias vimrc='nvim  ~/.vimrc'
-alias bashrc='nvim  ~/.bashrc && source ~/.bashrc'
+alias vimrc='e  ~/.vimrc'
+alias bashrc='e  ~/.bashrc && source ~/.bashrc'
 alias vimserver='vim --servername VIM'
 
 alias del=trash
@@ -111,8 +114,6 @@ alias sudo='sudo '
 
 # Ranger, exit to current folder
 alias fm='ranger --choosedir=$HOME/.config/ranger/rangerdir; LASTDIR=`cat $HOME/.config/ranger/rangerdir`; cd "$LASTDIR"'
-
-VM_SHARE="/mnt/hgfs/linux_vm_shared/"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

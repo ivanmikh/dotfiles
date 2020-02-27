@@ -4,7 +4,19 @@ CWD=$(pwd)
 DIR_NAME=$(basename $CWD)
 LIST="/tmp/svndiff_${DIR_NAME}.txt"
 
-svn diff --summarize | awk '{print $2}' > $LIST
+dirs=""
+
+for dir in "$@"
+do
+    if [ -d $dir ]; then
+        dirs="${dirs} ${dir}"
+    else
+        echo "$dir is not a directory!"
+        exit 1
+    fi
+done
+
+svn diff --summarize ${dirs} | awk '{print $2}' > $LIST
 if [ -s $LIST ]; then
     nvim $LIST
 else
