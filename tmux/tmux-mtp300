@@ -1,0 +1,9 @@
+#!/bin/bash
+
+tmux new-session -d 'ssh mtp300y' \; \
+         split-window -d 'ssh mtp300y' \; \
+         split-window -d 'ssh mtp300y' \; \
+         split-window -d 'ssh mtp300y' \; \
+         select-layout tiled \; \
+         attach \; \
+
