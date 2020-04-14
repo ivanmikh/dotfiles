@@ -5,13 +5,18 @@ DIR_NAME=$(basename $CWD)
 LIST="/tmp/svndiff_${DIR_NAME}.txt"
 
 dirs=""
+cmd=""
 
-for dir in "$@"
+for arg in "$@"
 do
-    if [ -d $dir ]; then
-        dirs="${dirs} ${dir}"
+    if [ "commit" == "$arg" ] ||
+       [ "update" == "$arg" ] ||
+       [ "revert" == "$arg" ]; then
+        cmd="$arg"
+    elif [ -d $arg ]; then
+        dirs="${dirs} ${arg}"
     else
-        echo "$dir is not a directory!"
+        echo "$dir is not a valid argument!"
         exit 1
     fi
 done
