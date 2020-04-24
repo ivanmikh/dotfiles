@@ -1,9 +1,0 @@
-#!/bin/bash
-
-tmux new-session \; \
-         split-window -h \; \
-         split-window -v \; \
-         select-pane -t 0 \; \
-         resize-pane -x 130 \; \
-         send-keys 'fm' C-m \;
-

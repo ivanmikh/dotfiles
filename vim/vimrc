@@ -16,7 +16,7 @@ set nocompatible
 let mapleader = ";"
 
 " Always wait for commands
-set notimeout
+"set notimeout
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 " - For Neovim: stdpath('data') . '/plugged'
@@ -95,7 +95,7 @@ nnoremap +d "+d
 nmap <leader>cp :let @+ = expand("%:p:a")<cr>
 
 " paste/delete without yanking selected
-vnoremap p "_dp
+vnoremap p "_dP
 nnoremap x "_x
 vnoremap x "_x
 
@@ -326,6 +326,7 @@ let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_theme='minimalist'
+let g:airline_minimalist_showmod = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Source files navigation
@@ -339,8 +340,8 @@ map <F5> viwy<F4>/<C-R>*<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
 " Save file
-inoremap <Esc><Esc> <Esc>:w<CR>
-vnoremap <Esc><Esc> <Esc>:w<CR>
+inoremap <Esc><Esc> <Esc>
+vnoremap <Esc><Esc> <Esc>
 nnoremap <Esc><Esc> <Esc>:w<CR>
 " Insert closing brace
 inoremap {<CR> {<CR>}<Esc>O
@@ -393,8 +394,11 @@ nnoremap ;df :YcmCompleter GoTo<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python
 
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
+let g:jedi#completions_enabled = 0
 let g:deoplete#sources#jedi#enable_typeinfo = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#auto_initialization = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
@@ -422,4 +426,4 @@ nnoremap <leader>h :nohlsearch<CR>
 command ShellRun :! ./% 
 
 " Compile and run
-command GccRun :!g++ $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
+command GccRun :!g++ -Wall $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
