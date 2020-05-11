@@ -5,18 +5,26 @@ set -x
 
 pck=(
   "alacritty" \
+  "apt-file" \
   "autoconf" \
   "automake" \
   "bc" \
   "binutils" \
+  "bison" \
   "build-essential" \
   "bzip2" \
   "cmake" \
   "cpio" \
+  "cscope" \
+  "ctags" \
   "curl" \
   "file" \
+  "flex" \
+  "fzf" \
   "g++" \
+  "gawk" \
   "gcc" \
+  "gdb" \
   "git" \
   "gparted" \
   "gzip" \
@@ -24,9 +32,13 @@ pck=(
   "libncurses5" \
   "libncurses5-dev" \
   "libncurses6" \
+  "liborc-dev" \
   "libtool" \
+  "m4" \
   "make" \
   "minicom" \
+  "net-tools" \
+  "ninja-build" \
   "patch" \
   "perl" \
   "python3" \
@@ -36,15 +48,20 @@ pck=(
   "rsync" \
   "sed" \
   "subversion" \
+  "swig" \
   "tar" \
+  "texi2html" \
+  "texinfo" \
   "tmux" \
   "trash-cli" \
   "unzip" \
+  "yasm" \
   ""
 )
 
 py_pck=(
   "matplotlib" \
+  "neovim-remote" \
   "numpy" \
   "pyvisa" \
   "pyvisa-py" \
@@ -58,6 +75,7 @@ dotfiles=$(readlink -f ~/Documents/dotfiles)
 sudo add-apt-repository ppa:mmstick76/alacritty
 
 ### install software
+sudo apt update
 sudo apt install ${pck[@]} -y
 pip3 install ${py_pck[@]}
 
@@ -98,6 +116,14 @@ if [ -f ~/.tmux.conf ]; then
    mv ~/.tmux.conf ~/.tmux.conf.bk
 fi
 ln -s ${dotfiles}/tmux/tmux.conf ~/.tmux.conf
+
+### alacritty
+if [ -f ~/.config/alacritty/alacritty.yml ]; then
+    mv ~/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml.bk
+else
+    mkdir -p ~/.config/alacritty
+fi
+ln -s ${dotfiles}/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml 
 
 ### caps-to-esc
 sudo cp -r ${dotfiles}/keyboard/X11 /etc/X11

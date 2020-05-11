@@ -117,7 +117,9 @@ alias sudo='sudo '
 
 # Ranger, exit to current folder
 #alias fm='ranger --choosedir=$HOME/.config/ranger/rangerdir; LASTDIR=`cat $HOME/.config/ranger/rangerdir`; cd "$LASTDIR"'
-alias fm='tmux new-session 'ranger''
+alias fm="tmux new-session 'ranger' \; rename-window ranger \; new-window 'NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim' \; rename-window 'nvim-server' \; select-window -t 0"
+# Start neovim server
+alias nvs='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
