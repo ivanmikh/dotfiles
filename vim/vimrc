@@ -16,7 +16,7 @@ set nocompatible
 let mapleader = ";"
 
 " Always wait for commands
-"set notimeout
+" set timeoutlen=500
 
 " Save edit history
 set undofile
@@ -42,8 +42,8 @@ Plug 'Konfekt/FastFold'
 Plug 'majutsushi/tagbar'
 Plug 'preservim/nerdtree'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'scrooloose/nerdcommenter'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe'
@@ -112,7 +112,7 @@ vnoremap x "_x
 set bs=indent,eol,start
 
 " wrap on pressing bs, space or arrows
-set whichwrap=<,>,[,]
+set whichwrap=<,>,[,],b,s
 
 " number of lines to show around the cursor
 set scrolloff=10
@@ -191,10 +191,7 @@ if has('cscope')
   cnoreabbrev csr cs reset
   cnoreabbrev css cs show
   cnoreabbrev csh cs help
-  
-  nnoremap <leader>dg :cscope find g <C-R><C-W><CR>
-  nnoremap <leader>dc :cscope find c <C-R><C-W><CR>
-
+ 
   source ~/.vim/autoload/cscope_maps.vim
 
   " if filereadable("cscope.out")
@@ -273,6 +270,7 @@ if has("autocmd")
 endif
 
 set autoread
+filetype plugin on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nerd Tree
@@ -326,8 +324,9 @@ nnoremap <Leader>f V%zf
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_x = ''
+let g:airline_section_x = "%{getcwd()}"
 let g:airline_section_y = ''
+let g:airline_section_c = '%f'
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_theme='minimalist'
 let g:airline_minimalist_showmod = 0
@@ -382,16 +381,16 @@ let g:ycm_server_python_interpreter='/usr/bin/python3'
 command! GoToDec YcmCompleter GoToDeclaration
 command! GoToDef YcmCompleter GoToDefinition
 
-nnoremap ;df :YcmCompleter GoTo<CR>
+nnoremap <leader>d :YcmCompleter GoTo<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python
 
-let g:deoplete#enable_at_startup = 0
-let g:jedi#completions_enabled = 0
-let g:deoplete#sources#jedi#enable_typeinfo = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#auto_initialization = 0
+let g:jedi#completions_enabled = 1
+let g:deoplete#sources#jedi#enable_typeinfo = 1
+let g:jedi#popup_on_dot = 1
+let g:jedi#auto_initialization = 1
+let g:polyglot_disabled = ['python']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GitGutter
@@ -402,25 +401,10 @@ highlight GitGutterChange guifg=#d2d2d2 ctermfg=3
 highlight GitGutterDelete guifg=#d2d2d2 ctermfg=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDCommenter
-
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Add your own custom formats or override the defaults
-"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-" Allow commenting and inverting empty lines (useful when commenting a region)
-"let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
+
+autocmd FileType c   setlocal commentstring=/*\ %s\ */
+autocmd FileType cpp setlocal commentstring=/*\ %s\ */
 
 " Block Ctrl-Z
 nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
@@ -442,5 +426,6 @@ nnoremap <leader>h :nohlsearch<CR>
 command! ShellRun :! ./% 
 
 " Compile and run
-command! GccRun :!g++ -Wall -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
+command! GccRun :!g++ -Wall -Wextra -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
+command! GccRun32 :!g++ -Wall -Wextra -m32 -g3 % && ./a.out
 

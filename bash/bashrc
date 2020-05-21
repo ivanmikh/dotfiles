@@ -93,6 +93,7 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exact -m'
 export EDITOR='nvim'
 export TERMCMD='alacritty'
+export PYTHONSTARTUP="/home/ivan/.pythonrc.py"
 
 # Change the prompt when you open a shell from inside ranger
 [ -n "$RANGER_LEVEL" ] && PS1="$PS1"'(in ranger) '

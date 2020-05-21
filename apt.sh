@@ -22,8 +22,10 @@ pck=(
   "flex" \
   "fzf" \
   "g++" \
+  "g++-multilib" \
   "gawk" \
   "gcc" \
+  "gcc-multilib" \
   "gdb" \
   "git" \
   "gparted" \

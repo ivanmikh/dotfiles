@@ -38,6 +38,34 @@ DIR_OF_THIS_SCRIPT = os.path.abspath( os.path.dirname( __file__ ) )
 flags = [
     '-x',
     'c++',
+    '-std=c++17',
+    '-Wall',
+    '-Wextra',
+    '-pedantic',
+    '-Wcast-align',
+    '-Wcast-qual',
+    '-Wctor-dtor-privacy',
+    '-Wdisabled-optimization',
+    '-Wformat=2',
+    '-Winit-self',
+    '-Wmissing-declarations',
+    '-Wmissing-include-dirs',
+    '-Wold-style-cast',
+    '-Woverloaded-virtual',
+    '-Wredundant-decls',
+    '-Wshadow',
+    '-Wsign-conversion',
+    '-Wsign-promo',
+    '-Wstrict-null-sentinel',
+    '-Wstrict-overflow=5',
+    '-Wswitch-default',
+    '-Wundef',
+    '-Wno-unused',
+    '-Wno-unused',
+    '-Wdisabled-optimization',
+    '-Wsign-conversion',
+    '-Wconversion',
+    '-I' + DIR_OF_THIS_SCRIPT,
     '-I.',
     '-I./lib',
     '-I/usr/include/dbus-1.0',
@@ -121,6 +149,9 @@ def GetCompilationInfoForFile( filename ):
     return None
   return database.GetCompilationInfoForFile( filename )
 
+def IsCFile( filename ):
+  extension = os.path.splitext( filename )[ 1 ]
+  return extension in [ '.c' ]
 
 def FlagsForFile( filename, **kwargs ):
   if database:
@@ -136,6 +167,11 @@ def FlagsForFile( filename, **kwargs ):
 
   else:
     relative_to = DirectoryOfThisScript()
+    if IsCFile( filename ):
+        if not flags.count('c'):
+            flags.insert(flags.index('-x') + 1, 'c')
+        if flags.count('c++'):
+            flags.remove('c++')
     final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
 
   return {
@@ -145,9 +181,16 @@ def FlagsForFile( filename, **kwargs ):
 
 def Settings( **kwargs ):
     language = kwargs[ 'language' ]
+    filename = kwargs[ 'filename' ]
+    if IsCFile( filename ):
+        if not flags.count('c'):
+            flags.insert(flags.index('-x') + 1, 'c')
+        if flags.count('c++'):
+            flags.remove('c++')
     if language == 'cfamily':
         return {
             'flags': flags
         }
 
     return {}
+
