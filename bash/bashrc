@@ -84,6 +84,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# set VI mode
+#set -o vi
+
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
@@ -94,12 +97,13 @@ export FZF_DEFAULT_OPTS='--layout=reverse --border --exact -m'
 export EDITOR='nvim'
 export TERMCMD='alacritty'
 export PYTHONSTARTUP="/home/ivan/.pythonrc.py"
+export PROMPT_DIRTRIM=3
 
 # Change the prompt when you open a shell from inside ranger
 [ -n "$RANGER_LEVEL" ] && PS1="$PS1"'(in ranger) '
 
 # some more ls aliases
-alias ll='ls -Flh'
+alias ll='ls -FlAh'
 alias la='ls -FlAh'
 alias l='ls -CF'
 
@@ -112,13 +116,14 @@ alias copy='xclip -sel clip'
 alias vimrc='e  ~/.vimrc'
 alias bashrc='e  ~/.bashrc && source ~/.bashrc'
 alias vimserver='vim --servername VIM'
+alias nvimserver='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
 
 alias del=trash
 alias sudo='sudo '
 
 # Ranger, exit to current folder
 #alias fm='ranger --choosedir=$HOME/.config/ranger/rangerdir; LASTDIR=`cat $HOME/.config/ranger/rangerdir`; cd "$LASTDIR"'
-alias fm="tmux new-session 'ranger' \; rename-window ranger \; new-window 'NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim' \; rename-window 'nvim-server' \; select-window -t 0"
+alias fm="tmux new-session ranger \; rename-window ranger \; new-window 'NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim' \; rename-window 'nvim-server' \; select-window -t 0"
 # Start neovim server
 alias nvs='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
 
@@ -145,3 +150,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+

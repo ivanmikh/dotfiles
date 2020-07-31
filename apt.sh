@@ -62,6 +62,7 @@ pck=(
 )
 
 py_pck=(
+  "ipython" \
   "matplotlib" \
   "neovim-remote" \
   "numpy" \

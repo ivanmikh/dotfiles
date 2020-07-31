@@ -34,19 +34,20 @@ set updatetime=1000
 call plug#begin('~/.vim/plugged')
 
 " Plugins
+" Plug 'sheerun/vim-polyglot'
+Plug 'Konfekt/FastFold'
+Plug 'Valloric/YouCompleteMe'
 Plug 'airblade/vim-gitgutter'
 Plug 'davidhalter/jedi-vim'
 Plug 'ericcurtin/CurtineIncSw.vim'
+Plug 'gauteh/vim-cppman'
 Plug 'junegunn/gv.vim'
-Plug 'Konfekt/FastFold'
 Plug 'majutsushi/tagbar'
 Plug 'preservim/nerdtree'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'Valloric/YouCompleteMe'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -169,6 +170,9 @@ set number
 set relativenumber
 " highlight linenr term=bold cterm=none ctermfg=darkgrey ctermbg=none gui=none guifg=darkgrey guibg=none
 
+set nohlsearch
+" Toggle hlsearch
+noremap <leader>hh :set hlsearch! hlsearch?<CR>
 " search in selected text
 vnoremap <leader>/ <esc>/\%v
 " search selected text
@@ -326,7 +330,7 @@ nnoremap <Leader>f V%zf
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_section_x = "%{getcwd()}"
 let g:airline_section_y = ''
-let g:airline_section_c = '%f'
+" let g:airline_section_c = '%f'
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_theme='minimalist'
 let g:airline_minimalist_showmod = 0
@@ -406,6 +410,8 @@ highlight GitGutterDelete guifg=#d2d2d2 ctermfg=1
 autocmd FileType c   setlocal commentstring=/*\ %s\ */
 autocmd FileType cpp setlocal commentstring=/*\ %s\ */
 
+" Scroll bind horiz
+set scrollopt=hor,ver,jump
 " Block Ctrl-Z
 nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 
@@ -426,6 +432,6 @@ nnoremap <leader>h :nohlsearch<CR>
 command! ShellRun :! ./% 
 
 " Compile and run
-command! GccRun :!g++ -Wall -Wextra -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
-command! GccRun32 :!g++ -Wall -Wextra -m32 -g3 % && ./a.out
+command! GccRun :!g++ -Wall -Wextra -std=c++17 -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
+command! GccRun32 :!g++ -Wall -Wextra -std=c++17 -m32 -g3 % && ./a.out
 
