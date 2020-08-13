@@ -25,8 +25,17 @@ set undodir=~/.vim/undo/
 " Directory for .swap files
 set directory=~/.vim/swap/
 
-" Swap file update time 
-set updatetime=1000
+" Update time 
+set updatetime=500
+
+" Hide --INSERT--
+set noshowmode
+
+" Show .h files properly
+set suffixes-=.h
+
+" Give more space for displaying messages.
+set cmdheight=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 " - For Neovim: stdpath('data') . '/plugged'
@@ -34,22 +43,34 @@ set updatetime=1000
 call plug#begin('~/.vim/plugged')
 
 " Plugins
-" Plug 'sheerun/vim-polyglot'
-Plug 'Konfekt/FastFold'
-Plug 'Valloric/YouCompleteMe'
-Plug 'airblade/vim-gitgutter'
-Plug 'davidhalter/jedi-vim'
+
+""" Code related
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'vim-syntastic/syntastic'
+
+""" Navigation
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'gauteh/vim-cppman'
-Plug 'junegunn/gv.vim'
 Plug 'majutsushi/tagbar'
-Plug 'preservim/nerdtree'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'tpope/vim-vinegar'
+
+""" Editing
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-unimpaired'
+
+""" Status bar
+Plug 'itchyny/lightline.vim'
+
+""" Git
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive'
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'junegunn/fzf'
+Plug 'tpope/vim-repeat'
 
 " Initialize plugin system
 call plug#end()
@@ -89,14 +110,14 @@ nmap <End> $
 autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
 
 " copy selection to system clipboard
-vnoremap +p "+p
 vnoremap +y "+y
+nnoremap +y "+y
 vnoremap +d "+d
+nnoremap +d "+d
 
 " paste from system clipboard
 nnoremap +p "+p
-nnoremap +y "+y
-nnoremap +d "+d
+vnoremap +p "+p
 
 " copy filepath to system clipboard
 nmap <leader>cp :let @+ = expand("%:p:a")<cr>
@@ -113,10 +134,10 @@ vnoremap x "_x
 set bs=indent,eol,start
 
 " wrap on pressing bs, space or arrows
-set whichwrap=<,>,[,],b,s
+set whichwrap=<,>,[,]
 
 " number of lines to show around the cursor
-set scrolloff=10
+set scrolloff=5
 " show tabs and trailing spaces
 set list
 set listchars=tab:→\ ,eol:¬,space:·,trail:-,extends:❯,precedes:❮
@@ -142,14 +163,10 @@ set showcmd
 " set colorscheme
 colorscheme wombat256
 
-" tab colors
-hi tabline ctermfg=grey
-hi tablinesel ctermfg=white
-
 set termguicolors
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" search
+"" Search
 
 "" recursive search
 "set path+=**
@@ -171,58 +188,20 @@ set relativenumber
 " highlight linenr term=bold cterm=none ctermfg=darkgrey ctermbg=none gui=none guifg=darkgrey guibg=none
 
 set nohlsearch
-" Toggle hlsearch
-noremap <leader>hh :set hlsearch! hlsearch?<CR>
 " search in selected text
 vnoremap <leader>/ <esc>/\%v
 " search selected text
 vnoremap <leader>* y/\V<C-R>=escape(@",'/\')<CR><CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CScope
-
-if has('cscope')
-  set cscopetag
-  set nocscopeverbose
-
-  if has('quickfix')
-     set cscopequickfix=s-,c-,d-,i-,t-,e-
-  endif
-
-  cnoreabbrev csa cs add
-  cnoreabbrev csf cs find
-  cnoreabbrev csk cs kill
-  cnoreabbrev csr cs reset
-  cnoreabbrev css cs show
-  cnoreabbrev csh cs help
- 
-  source ~/.vim/autoload/cscope_maps.vim
-
-  " if filereadable("cscope.out")
-  "   cs add cscope.out
-  " endif
-  function! LoadCscope()
-    let db = findfile("cscope.out", ".;")
-    if (!empty(db))
-      let path = strpart(db, 0, match(db, "/cscope.out$"))
-      set nocscopeverbose " suppress 'duplicate connection' error
-      exe "cs add " . db . " " . path
-      set cscopeverbose
-    " else add the database pointed to by environment variable 
-    elseif $CSCOPE_DB != "" 
-      cs add $CSCOPE_DB
-    endif
-  endfunction
-  au BufEnter /* call LoadCscope()
-endif
+command! -nargs=0 F :FZF
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Splits
 
 " Alt tab windows
-" map T <C-W>w
-map H <C-W>h
-map L <C-W>l
+"map T <C-W>w
+"map H <C-W>h
+"map L <C-W>l
 " Map shift+arrows to change windows
 map [1;2A <C-W>k
 map [1;2B <C-W>j
@@ -239,52 +218,26 @@ set splitright
 " Close buffer and keep split
 set hidden
 "nnoremap <c-c> :bp\|bd #<CR>
-nnoremap <c-c> :bp<cr>:bd #<cr>
-nnoremap <C-N> :bn<CR>
-nnoremap <C-P> :bp<CR>
+"nnoremap <c-c> :bp<cr>:bd #<cr>
 nnoremap gb :ls<CR>:b<space>
 nnoremap gvb :ls<CR>:vert sb<space>
 nnoremap gsb :ls<CR>:sb<space>
 
-" MiniBufExplorer
-"hi MBENormal               ctermfg=darkgrey guibg=fg
-"hi MBEChanged              ctermfg=grey     guibg=fg
-"hi MBEVisibleNormal        ctermfg=darkgrey guibg=fg
-"hi MBEVisibleChanged       ctermfg=grey     guibg=fg
-"hi MBEVisibleActiveNormal  ctermfg=cyan     guibg=fg
-"hi MBEVisibleActiveChanged ctermfg=magenta  guibg=fg
-"let g:miniBufExplMapWindowNavVim = 1 
-"let g:miniBufExplMapWindowNavArrows = 1 
-"let g:miniBufExplMapCTabSwitchBufs = 1 
-"let g:miniBufExplModSelTarget = 1 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Opening a file
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
+" Jump to the last position when reopening a file
 if has("autocmd") && (! &diff)
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
+" Load indentation rules and plugins according to the detected filetype.
 if has("autocmd")
   filetype plugin indent on
 endif
 
 set autoread
 filetype plugin on
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Nerd Tree
-
-" Toggle NERDTree file browser
-map <F2> :NERDTreeToggle <CR>
-let NERDTreeMinimalUI  = 0
-let NERDTreeQuitOnOpen = 0
-" Close NERDTree if it is the only buffer left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TagBar
@@ -304,105 +257,162 @@ set foldlevelstart=10
 nnoremap <Leader>f V%zf
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Status line
-" au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
-" au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
-" set laststatus=2           " enable status line always
-" set statusline=[%n]        " Buffer number
-" set statusline+=\          " Insert space
-" set statusline+=CF:%F      " Path to the file
-" set statusline+=\          " Insert space
-" set statusline+=%r         " Read only flag
-" set statusline+=%9*\       " Gap
-" set statusline+=%9*CWD:    " Print "CWD"
-" set statusline+=%9*%{getcwd()} " Current working directory
-" set statusline+=%9*%=      " Switch to the right side
-" set statusline+=\ \        " Gap
-" set statusline+=%9*%m      " Modified
-" set statusline+=\ \        " Insert space
-" set statusline+=%9*%P         " Percentage
-" set statusline+=\ \        " Gap
-" set statusline+=%l:%c      " Current line : column
-" set statusline+=/          " Separator
-" set statusline+=%L         " Total lines
-
-" Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_x = "%{getcwd()}"
-let g:airline_section_y = ''
-" let g:airline_section_c = '%f'
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_theme='minimalist'
-let g:airline_minimalist_showmod = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
+" Lightline
+let g:lightline = {
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'absolutepath', 'readonly',  'cocstatus', 'filename', 'modified' ] ],
+  \   'right': [ [ 'lineinfo' ],
+  \              [ 'gitbranch', 'fileformat', 'fileencoding', 'filetype' ] ]
+  \ },
+  \ 'colorscheme': 'wombat',
+  \ 'component': {
+  \   'lineinfo': "%{line('.') . '/' . line('$')}",
+  \ },
+  \ 'component_function': {
+  \   'cocstatus': 'coc#status',
+  \   'gitbranch': 'FugitiveHead',
+  \   'cwd'      : 'LightLineCwd'
+  \ },
+\ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Source files navigation
+" CurtineIncSw
 
 " Switch header/source
 map <F4> :call CurtineIncSw()<CR>
 
-" Switch declaration/definition
-map <F5> viwy<F4>/<C-R>*<CR>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
+
 " Save file
 nnoremap <Esc><Esc> <Esc>:w<CR>
 " Space in normal mode
 nnoremap <space> i<space><esc>l
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Termdebug
+let g:termdebugger = "gdb-multiarch"
+" C(++) debugging
+" See https://neovim.io/doc/user/nvim_terminal_emulator.html
+" For a nice split window view
+let g:termdebug_popup = 0
+let g:termdebug_wide = 163
+" Map ESC to exit terminal mode
+tnoremap <Esc> <C-\><C-n>
+nnoremap <silent> <leader>b :Break<CR>
+nnoremap <silent> <leader>bc :Clear<CR>
+nnoremap <silent> <leader>c :Continue<CR>
+" map ,w :call TermDebugSendCommand('where')<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YouCompleteMe
+" c++ syntax highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
 
-let g:ycm_always_populate_location_list = 1
-let g:ycm_global_ycm_extra_conf='/home/ivan/Documents/dotfiles/vim/ycm_extra_conf.py'
-let g:ycm_warning_symbol = '..'
-let g:ycm_error_symbol = '>>'
+" syntastic
+let g:syntastic_mode_map = {
+    \ "mode": "passive",
+    \ "active_filetypes": [],
+    \ "passive_filetypes": [] }
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_cpp_checkers = ['clang-format']
+let g:syntastic_c_checkers = ['clang-format']
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_sh_checkers = ['shellcheck']
+nmap <silent> <leader>sc :SyntasticCheck<cr>
 
-highlight clear YcmWarningSign
-highlight clear YcmWarningLine
-highlight clear YcmWarningSection
-highlight clear YcmErrorSign
-highlight clear YcmErrorLine
-highlight clear YcmErrorSection
-highlight YcmWarningSign ctermfg=Cyan guifg=Cyan
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COC
+" Some servers have issues with backup files, see #649.
+"set nobackup
+"set nowritebackup
 
-let g:ycm_add_preview_to_completeopt=0
-set completeopt-=preview
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
 
-" Disable YCM for vimdiff
-if &diff
-  let g:loaded_youcompleteme = 1
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
 endif
 
-" Do not ask about conf loading
-let g:ycm_confirm_extra_conf = 0
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
-let g:ycm_server_python_interpreter='/usr/bin/python3'
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-command! GoToDec YcmCompleter GoToDeclaration
-command! GoToDef YcmCompleter GoToDefinition
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
-nnoremap <leader>d :YcmCompleter GoTo<CR>
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Python
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-let g:jedi#completions_enabled = 1
-let g:deoplete#sources#jedi#enable_typeinfo = 1
-let g:jedi#popup_on_dot = 1
-let g:jedi#auto_initialization = 1
-let g:polyglot_disabled = ['python']
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GitGutter
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" let g:gitgutter_set_sign_backgrounds = 1
-highlight GitGutterAdd    guifg=#d2d2d2 ctermfg=2
-highlight GitGutterChange guifg=#d2d2d2 ctermfg=3
-highlight GitGutterDelete guifg=#d2d2d2 ctermfg=1
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
@@ -412,21 +422,12 @@ autocmd FileType cpp setlocal commentstring=/*\ %s\ */
 
 " Scroll bind horiz
 set scrollopt=hor,ver,jump
+
 " Block Ctrl-Z
 nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 
-" echo filepath
-nnoremap <leader>cfp :let @+=expand("%:p")<CR>
-nnoremap <leader>cfn :let @+=expand("%")<CR>
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-command! W w !sudo tee > /dev/null %
-
 " Quit without saving
 command! Q q!
-
-" Disable search highlight
-nnoremap <leader>h :nohlsearch<CR>
 
 " Run current file
 command! ShellRun :! ./% 

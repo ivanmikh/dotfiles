@@ -32,6 +32,7 @@ hi StatusLineNC	ctermfg=243		ctermbg=238		cterm=none		guifg=#857b6f	guibg=#44444
 hi LineNr		ctermfg=243		ctermbg=0		cterm=none		guifg=#857b6f	guibg=#000000	gui=none
 hi SpecialKey	ctermfg=244		ctermbg=236		cterm=none		guifg=#3d3b3b	guibg=NONE		gui=none
 hi NonText		ctermfg=244		ctermbg=236		cterm=none		guifg=#3d3b3b	guibg=NONE		gui=none
+hi SignColumn	ctermfg=244		ctermbg=236		cterm=none		guifg=NONE		guibg=NONE		gui=none
 
 " Vim >= 7.0 specific colors
 if version >= 700
@@ -41,6 +42,9 @@ hi Pmenu		ctermfg=7		ctermbg=238						guifg=#f6f3e8	guibg=#444444
 hi PmenuSel		ctermfg=0		ctermbg=192						guifg=#000000	guibg=#cae682
 endif
 
+" Tab colors
+hi tabline      ctermfg=grey
+hi tablinesel   ctermfg=white
 
 " Syntax highlighting
 hi Keyword		ctermfg=111		cterm=none		guifg=#8ac6f2	gui=none
@@ -60,5 +64,14 @@ hi Todo			ctermfg=245		cterm=none		guifg=#8f8f8f	gui=italic
 " Links
 hi! link FoldColumn		Folded
 hi! link CursorColumn	CursorLine
+
+" Termdebug
+hi debugPC         term=reverse ctermbg=darkblue guibg=darkblue
+hi debugBreakpoint term=reverse ctermbg=red      guibg=red
+
+" GitGutter
+hi GitGutterAdd    guifg=#d2d2d2 ctermfg=2
+hi GitGutterChange guifg=#d2d2d2 ctermfg=3
+hi GitGutterDelete guifg=#d2d2d2 ctermfg=1
 
 " vim:set ts=4 sw=4 noet:

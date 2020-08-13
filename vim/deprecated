@@ -1,0 +1,140 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CScope
+
+if has('cscope')
+  set cscopetag
+  set nocscopeverbose
+
+  if has('quickfix')
+     set cscopequickfix=s-,c-,d-,i-,t-,e-
+  endif
+
+  cnoreabbrev csa cs add
+  cnoreabbrev csf cs find
+  cnoreabbrev csk cs kill
+  cnoreabbrev csr cs reset
+  cnoreabbrev css cs show
+  cnoreabbrev csh cs help
+ 
+  source ~/.vim/autoload/cscope_maps.vim
+
+  " if filereadable("cscope.out")
+  "   cs add cscope.out
+  " endif
+  function! LoadCscope()
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+      let path = strpart(db, 0, match(db, "/cscope.out$"))
+      set nocscopeverbose " suppress 'duplicate connection' error
+      exe "cs add " . db . " " . path
+      set cscopeverbose
+    " else add the database pointed to by environment variable 
+    elseif $CSCOPE_DB != "" 
+      cs add $CSCOPE_DB
+    endif
+  endfunction
+  au BufEnter /* call LoadCscope()
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" MiniBufExplorer
+"hi MBENormal               ctermfg=darkgrey guibg=fg
+"hi MBEChanged              ctermfg=grey     guibg=fg
+"hi MBEVisibleNormal        ctermfg=darkgrey guibg=fg
+"hi MBEVisibleChanged       ctermfg=grey     guibg=fg
+"hi MBEVisibleActiveNormal  ctermfg=cyan     guibg=fg
+"hi MBEVisibleActiveChanged ctermfg=magenta  guibg=fg
+"let g:miniBufExplMapWindowNavVim = 1 
+"let g:miniBufExplMapWindowNavArrows = 1 
+"let g:miniBufExplMapCTabSwitchBufs = 1 
+"let g:miniBufExplModSelTarget = 1 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Nerd Tree
+
+" Toggle NERDTree file browser
+map <F2> :NERDTreeToggle <CR>
+let NERDTreeMinimalUI  = 0
+let NERDTreeQuitOnOpen = 0
+" Close NERDTree if it is the only buffer left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Status line
+" au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
+" au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
+" set laststatus=2           " enable status line always
+" set statusline=[%n]        " Buffer number
+" set statusline+=\          " Insert space
+" set statusline+=CF:%F      " Path to the file
+" set statusline+=\          " Insert space
+" set statusline+=%r         " Read only flag
+" set statusline+=%9*\       " Gap
+" set statusline+=%9*CWD:    " Print "CWD"
+" set statusline+=%9*%{getcwd()} " Current working directory
+" set statusline+=%9*%=      " Switch to the right side
+" set statusline+=\ \        " Gap
+" set statusline+=%9*%m      " Modified
+" set statusline+=\ \        " Insert space
+" set statusline+=%9*%P         " Percentage
+" set statusline+=\ \        " Gap
+" set statusline+=%l:%c      " Current line : column
+" set statusline+=/          " Separator
+" set statusline+=%L         " Total lines
+
+" Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_x = "%{getcwd()}"
+let g:airline_section_y = ''
+" let g:airline_section_c = '%f'
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_theme='minimalist'
+let g:airline_minimalist_showmod = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python
+
+let g:jedi#completions_enabled = 1
+let g:deoplete#sources#jedi#enable_typeinfo = 1
+let g:jedi#popup_on_dot = 1
+let g:jedi#auto_initialization = 1
+let g:polyglot_disabled = ['python']
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe
+
+let g:ycm_always_populate_location_list = 1
+let g:ycm_global_ycm_extra_conf='/home/ivan/Documents/dotfiles/vim/ycm_extra_conf.py'
+let g:ycm_warning_symbol = '..'
+let g:ycm_error_symbol = '>>'
+
+highlight clear YcmWarningSign
+highlight clear YcmWarningLine
+highlight clear YcmWarningSection
+highlight clear YcmErrorSign
+highlight clear YcmErrorLine
+highlight clear YcmErrorSection
+highlight YcmWarningSign ctermfg=Cyan guifg=Cyan
+
+let g:ycm_add_preview_to_completeopt=0
+set completeopt-=preview
+
+" Disable YCM for vimdiff
+if &diff
+  let g:loaded_youcompleteme = 1
+endif
+
+" Do not ask about conf loading
+let g:ycm_confirm_extra_conf = 0
+
+let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+
+command! GoToDec YcmCompleter GoToDeclaration
+command! GoToDef YcmCompleter GoToDefinition
+
+nnoremap <leader>d :YcmCompleter GoTo<CR>
+
