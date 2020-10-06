@@ -18,6 +18,7 @@ pck=(
   "cscope" \
   "ctags" \
   "curl" \
+  "default-jre" \
   "file" \
   "flex" \
   "fzf" \

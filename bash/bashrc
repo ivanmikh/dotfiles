@@ -103,9 +103,9 @@ export PROMPT_DIRTRIM=3
 [ -n "$RANGER_LEVEL" ] && PS1="$PS1"'(in ranger) '
 
 # some more ls aliases
-alias ll='ls -FlAh'
-alias la='ls -FlAh'
-alias l='ls -CF'
+alias ll='ls -vFlAh'
+alias la='ls -vFlAh'
+alias l='ls -vCF'
 
 alias e='$EDITOR '
 

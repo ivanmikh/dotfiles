@@ -3,7 +3,7 @@
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "rootPatterns": [".ccls", "compile_commands.json"],
       "initializationOptions": {
         "cache": {
           "directory": "/home/ivan/.ccls-cache"
@@ -24,11 +24,15 @@
     "vim": "vint",
     "sh": "shellcheck",
     "cpp": "clang-format",
-    "c": "clang-format"
+    "c": "clang-format",
+    "rust": "rustfmt"
   },
   "diagnostic-languageserver.formatters": {
     "clang-format": {
       "command": "clang-format"
+    },
+    "rustfmt": {
+      "command": "rustfmt"
     }
   }
 }

@@ -189,7 +189,7 @@ set relativenumber
 
 set nohlsearch
 " search in selected text
-vnoremap <leader>/ <esc>/\%v
+vnoremap <leader>/ <esc>/\%V
 " search selected text
 vnoremap <leader>* y/\V<C-R>=escape(@",'/\')<CR><CR>
 
@@ -332,6 +332,10 @@ nmap <silent> <leader>sc :SyntasticCheck<cr>
 "set nobackup
 "set nowritebackup
 
+if &diff
+    let b:coc_enabled = 0
+endif
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
@@ -343,6 +347,8 @@ if has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
+
+let b:coc_root_patterns = ['.git', '.svn', '.vim']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -433,6 +439,6 @@ command! Q q!
 command! ShellRun :! ./% 
 
 " Compile and run
-command! GccRun :!g++ -Wall -Wextra -std=c++17 -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && ./a.out
-command! GccRun32 :!g++ -Wall -Wextra -std=c++17 -m32 -g3 % && ./a.out
+command! GccRun :!g++ -Wall -Wextra -std=c++17 -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && time ./a.out
+command! GccRun32 :!g++ -Wall -Wextra -std=c++17 -m32 -g3 % && time ./a.out
 
