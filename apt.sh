@@ -4,7 +4,6 @@ set -e
 set -x
 
 pck=(
-  "alacritty" \
   "apt-file" \
   "autoconf" \
   "automake" \
@@ -13,6 +12,8 @@ pck=(
   "bison" \
   "build-essential" \
   "bzip2" \
+  "cargo" \
+  "ccls" \
   "cmake" \
   "cpio" \
   "cscope" \
@@ -40,7 +41,9 @@ pck=(
   "llvm" \
   "m4" \
   "make" \
+  "meson" \
   "minicom" \
+  "neovim" \
   "net-tools" \
   "ninja-build" \
   "nodejs" \
@@ -61,8 +64,7 @@ pck=(
   "trash-cli" \
   "unzip" \
   "yarn" \
-  "yasm" \
-  ""
+  "yasm"
 )
 
 py_pck=(
@@ -75,41 +77,20 @@ py_pck=(
   "pylint" \
   "pyvisa" \
   "pyvisa-py" \
-  "scipy" \
-  ""
+  "scipy"
 )
 
-dotfiles=$(readlink -f ~/Documents/dotfiles)
+dotfiles=$(readlink -f "$(dirname $0)")
 
-### add repositories
-sudo add-apt-repository ppa:mmstick76/alacritty
+if [ "$dotfiles" == "" ]; then
+    exit 1
+fi
 
 ### install software
 sudo apt update
 sudo apt install "${pck[@]}" -y
 pip3 install "${py_pck[@]}"
-
-### vim/nvim
-# autoload
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-curl -fLo ~/.vim/autoload/cscope_maps.vim http://cscope.sourceforge.net/cscope_maps.vim
-# colors
-mkdir -p ~/.vim/colors
-ln -s "${dotfiles}"/vim/default.vim ~/.vim/colors/default.vim
-ln -s "${dotfiles}"/vim/wombat256.vim ~/.vim/colors/wombat256.vim
-# more folders
-mkdir -p ~/.vim/swap
-mkdir -p ~/.vim/undo
-# vimrc
-if [ -f "$HOME/.vimrc" ]; then
-    mv ~/.vimrc ~/.vimrc.bk
-fi
-ln -s "${dotfiles}"/vim/vimrc ~/.vimrc
-# nvim
-mkdir -p ~/.config/nvim
-ln -s "${dotfiles}"/nvim/init.vim ~/.config/nvim/init.vim
-ln -s "${dotfiles}"/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
+cargo install alacritty
 
 ### bash
 if [ -f ~/.bashrc ]; then
@@ -139,9 +120,13 @@ else
 fi
 ln -s "${dotfiles}"/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml 
 
-### caps-to-esc
-sudo cp -r "${dotfiles}"/keyboard/X11 /etc/X11
-
 ### scripts
-ln -s "${dotfiles}"/diff_dirs/diff_dirs.sh ~/.local/bin/diff_dirs
+ln -s "${dotfiles}"/svn/diff_dirs.sh ~/.local/bin/diff_dirs
 ln -s "${dotfiles}"/svn/svndiff.sh ~/.local/bin/svndiff
+
+cat << EOF >> ~/.profile
+# add Cargo bin directory
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+EOF

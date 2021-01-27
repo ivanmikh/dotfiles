@@ -121,6 +121,8 @@ alias nvimserver='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
 alias del=trash
 alias sudo='sudo '
 
+alias wttr='curl http://wttr.in/Burnaby'
+
 # Ranger, exit to current folder
 #alias fm='ranger --choosedir=$HOME/.config/ranger/rangerdir; LASTDIR=`cat $HOME/.config/ranger/rangerdir`; cd "$LASTDIR"'
 alias fm="tmux new-session ranger \; rename-window ranger \; new-window 'NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim' \; rename-window 'nvim-server' \; select-window -t 0"
@@ -150,4 +152,5 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
 
