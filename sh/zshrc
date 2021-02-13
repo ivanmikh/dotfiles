@@ -1,0 +1,31 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+setopt autocd notify
+unsetopt beep
+bindkey -v
+# End of lines configured by zsh-newuser-install
+
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/ivan/.zshrc'
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# set prompt
+autoload colors && colors
+autoload -Uz promptinit
+promptinit
+prompt adam2
+
+# from git-scm.com
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+# PROMPT=\$vcs_info_msg_0_'%# '
+zstyle ':vcs_info:git:*' formats '%b'
+
+source ~/.aliases

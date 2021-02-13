@@ -3,7 +3,7 @@
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json"],
+      "rootPatterns": ["config.ccls", "compile_commands.json"],
       "initializationOptions": {
         "cache": {
           "directory": "/home/ivan/.ccls-cache"
