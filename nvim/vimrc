@@ -332,6 +332,8 @@ nmap <silent> <leader>sc :SyntasticCheck<cr>
 "set nobackup
 "set nowritebackup
 
+let b:coc_enabled = 0
+
 if &diff
     let b:coc_enabled = 0
 endif
