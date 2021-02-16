@@ -3,7 +3,6 @@
 set -e
 set -x
 
-
 pck=(
   "apt-file" \
   "autoconf" \
@@ -69,7 +68,8 @@ pck=(
   "trash-cli" \
   "unzip" \
   "yarn" \
-  "yasm"
+  "yasm" \
+  "zsh"
 )
 
 py_pck=(
@@ -97,45 +97,54 @@ sudo apt install "${pck[@]}" -y
 pip3 install "${py_pck[@]}"
 cargo install alacritty
 
+function backup_and_link() {
+    if [ -f "${2}" ]; then
+        mv "${2}" "${2}".bk
+    fi
+    ln -sf "${1}" "${2}"
+}
+
 ### bash
-if [ -f ~/.bashrc ]; then
-    mv ~/.bashrc ~/.bashrc.bk
-fi
-ln -s "${dotfiles}"/bash/bashrc ~/.bashrc
+backup_and_link "${dotfiles}"/sh/bashrc ~/.bashrc
+
+### zsh
+backup_and_link "${dotfiles}"/sh/zshrc ~/.zshrc
+
+### aliases
+backup_and_link "${dotfiles}"/sh/aliases ~/.aliases
 
 ### ranger
 mkdir -p ~/.config/ranger
-ln -sf "${dotfiles}"/ranger/commands.py ~/.config/ranger/commands.py
-ln -sf "${dotfiles}"/ranger/commands_full.py ~/.config/ranger/commands_full.py
-ln -sf "${dotfiles}"/ranger/rc.conf ~/.config/ranger/rc.conf
-ln -sf "${dotfiles}"/ranger/rifle.conf ~/.config/ranger/rifle.conf
-ln -sf "${dotfiles}"/ranger/scope.sh ~/.config/ranger/scope.sh
+backup_and_link "${dotfiles}"/ranger/commands.py ~/.config/ranger/commands.py
+backup_and_link "${dotfiles}"/ranger/commands_full.py ~/.config/ranger/commands_full.py
+backup_and_link "${dotfiles}"/ranger/rc.conf ~/.config/ranger/rc.conf
+backup_and_link "${dotfiles}"/ranger/rifle.conf ~/.config/ranger/rifle.conf
+backup_and_link "${dotfiles}"/ranger/scope.sh ~/.config/ranger/scope.sh
 
 ### tmux
-if [ -f ~/.tmux.conf ]; then
-   mv ~/.tmux.conf ~/.tmux.conf.bk
-fi
-ln -s "${dotfiles}"/tmux/tmux.conf ~/.tmux.conf
+backup_and_link "${dotfiles}"/tmux/tmux.conf ~/.tmux.conf
 
 ### alacritty
-if [ -f ~/.config/alacritty/alacritty.yml ]; then
-    mv ~/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml.bk
-else
-    mkdir -p ~/.config/alacritty
-fi
-ln -s "${dotfiles}"/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml 
+mkdir -p ~/.config/alacritty
+backup_and_link "${dotfiles}"/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml 
 
-sudo wget -O /usr/share/pixmaps/alacritty-term.svg https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/compat/alacritty-term.png
+sudo wget -O /usr/share/pixmaps/Alacritty.svg https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/compat/alacritty-term.png
 sudo wget -O /usr/share/applications/Alacritty.desktop https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop
 
 ### scripts
-ln -s "${dotfiles}"/svn/diff_dirs.sh ~/.local/bin/diff_dirs
-ln -s "${dotfiles}"/svn/svndiff.sh ~/.local/bin/svndiff
+ln -sf "${dotfiles}"/svn/diff_dirs.sh ~/.local/bin/diff_dirs
+ln -sf "${dotfiles}"/svn/svndiff.sh ~/.local/bin/svndiff
+
+### add cargo bin to profile
+if [ "$(grep -e '.cargo/bin' ~/.profile)" == "" ]; then
 
 cat << EOF >> ~/.profile
 
 # add Cargo bin directory
 if [ -d "\$HOME/.cargo/bin" ] ; then
-    PATH="\$HOME/.cargo/bin:\$PATH"
+PATH="\$HOME/.cargo/bin:\$PATH"
 fi
 EOF
+
+fi
+
