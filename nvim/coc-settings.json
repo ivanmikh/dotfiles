@@ -3,7 +3,8 @@
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": ["config.ccls", "compile_commands.json"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git"],
+      "disableDiagnostics": false,
       "initializationOptions": {
         "cache": {
           "directory": "/home/ivan/.ccls-cache"
@@ -18,6 +19,12 @@
             "lsRanges" : true
         }
       }
+    },
++   "bash": {
++     "command": "bash-language-server",
++     "args": ["start"],
++     "filetypes": ["sh"],
++     "ignoredRootPaths": ["~"]
     }
   },
   "diagnostic-languageserver.filetypes": {

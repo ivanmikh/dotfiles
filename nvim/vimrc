@@ -44,7 +44,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plugins
 
-""" Code related
+""" LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vim-syntastic/syntastic'
@@ -268,7 +268,7 @@ let g:lightline = {
   \ },
   \ 'colorscheme': 'wombat',
   \ 'component': {
-  \   'lineinfo': "%{line('.') . '/' . line('$')}",
+  \   'lineinfo': '%3l:%-2c/%3L',
   \ },
   \ 'component_function': {
   \   'cocstatus': 'coc#status',
@@ -406,7 +406,8 @@ function! s:show_documentation()
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold  * silent call CocActionAsync('highlight')
+autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
