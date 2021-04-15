@@ -110,6 +110,7 @@ nmap <End> $
 autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
 
 " copy selection to system clipboard
+vnoremap <Enter> "+y
 vnoremap +y "+y
 nnoremap +y "+y
 vnoremap +d "+d
@@ -332,7 +333,7 @@ nmap <silent> <leader>sc :SyntasticCheck<cr>
 "set nobackup
 "set nowritebackup
 
-let b:coc_enabled = 0
+"let b:coc_enabled = 0
 
 if &diff
     let b:coc_enabled = 0

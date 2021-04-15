@@ -5,10 +5,14 @@ set -x
 
 pck=(
   "apt-file" \
+  "asciidoc" \
+  "atool" \
   "autoconf" \
   "automake" \
   "bc" \
+  "bear" \
   "binutils" \
+  "binutils-dev"
   "bison" \
   "build-essential" \
   "bzip2" \
@@ -16,11 +20,14 @@ pck=(
   "ccls" \
   "cmake" \
   "cpio" \
+  "crash" \
   "cscope" \
   "ctags" \
   "curl" \
   "default-jre" \
+  "fakeroot" \
   "file" \
+  "flex" \
   "flex" \
   "fzf" \
   "g++" \
@@ -30,20 +37,29 @@ pck=(
   "gcc-multilib" \
   "gdb" \
   "git" \
+  "git-doc" \
+  "git-email" \
   "gparted" \
   "gzip" \
+  "kernel-wedge" \
+  "kexec-tools" \
+  "libelf-dev" \
   "libfontconfig1-dev" \
   "libfreetype6-dev" \
   "libncurses-dev" \
   "libncurses5" \
+  "libncurses5" \
+  "libncurses5-dev" \
   "libncurses5-dev" \
   "libncurses6" \
   "liborc-dev" \
+  "libssl-dev"
   "libtool" \
   "libxcb-xfixes0-dev" \
   "llvm" \
   "m4" \
   "make" \
+  "makedumpfile" \
   "meson" \
   "minicom" \
   "neovim" \
