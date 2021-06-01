@@ -59,6 +59,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-sleuth'
 
 """ Status bar
 Plug 'itchyny/lightline.vim'
@@ -69,7 +70,9 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug '/usr/bin/fzf'
 Plug 'tpope/vim-repeat'
 
 " Initialize plugin system
@@ -170,7 +173,7 @@ set termguicolors
 "" Search
 
 "" recursive search
-"set path+=**
+set path+=**
 
 " nice way to show search results
 set wildmenu
@@ -212,6 +215,14 @@ map [1;2D <C-W>h
 " Open new split panes to right and bottom
 set splitbelow
 set splitright
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tabs
+
+nnoremap [t :tabprevious<CR>
+nnoremap ]t :tabnext<CR>
+nnoremap [T :tabfirst<CR>
+nnoremap ]T :tablast<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Buffers
