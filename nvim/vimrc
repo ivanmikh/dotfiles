@@ -122,6 +122,8 @@ nnoremap +d "+d
 " paste from system clipboard
 nnoremap +p "+p
 vnoremap +p "+p
+nnoremap +P "+P
+vnoremap +P "+P
 
 " copy filepath to system clipboard
 nmap <leader>cp :let @+ = expand("%:p:a")<cr>
@@ -255,7 +257,7 @@ filetype plugin on
 " TagBar
 
 " Toggle Tags List
-map <F3> :TagbarToggle<CR>
+map <F3> :TagbarOpenAutoClose<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
@@ -440,6 +442,9 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 autocmd FileType c   setlocal commentstring=/*\ %s\ */
 autocmd FileType cpp setlocal commentstring=/*\ %s\ */
+
+" local vimrc
+silent! so .vimlocal
 
 " Scroll bind horiz
 set scrollopt=hor,ver,jump
