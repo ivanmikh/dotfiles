@@ -1,0 +1,4 @@
+clang
+%c --include=./include/generated/asm-offsets.h --include=./include/generated/autoconf.h --include=./include/generated/bounds.h --include=./include/generated/compile.h --include=./include/generated/timeconst.h --include=./include/generated/utsrelease.h --include=./include/generated/uapi/linux/version.h
+-I.
+-I./include
