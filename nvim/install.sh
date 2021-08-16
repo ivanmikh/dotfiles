@@ -18,4 +18,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 nvim -c PlugUpdate -c 'CocInstall coc-sh' -c 'CocInstall coc-pyright' 
+cd ~/.vim/plugged/coc.nvim
+npm install esbuild
+npm run build
+cd -
+nvim -c 'CocInstall coc-sh' -c 'CocInstall coc-pyright' 
 

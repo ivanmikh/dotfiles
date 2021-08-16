@@ -9,6 +9,7 @@ pck=(
   "atool" \
   "autoconf" \
   "automake" \
+  "bash-completion" \
   "bc" \
   "bear" \
   "binutils" \
@@ -22,12 +23,11 @@ pck=(
   "cpio" \
   "crash" \
   "cscope" \
-  "ctags" \
+  "universal-ctags" \
   "curl" \
   "default-jre" \
   "fakeroot" \
   "file" \
-  "flex" \
   "flex" \
   "fzf" \
   "g++" \
@@ -66,6 +66,7 @@ pck=(
   "net-tools" \
   "ninja-build" \
   "nodejs" \
+  "npm" \
   "patch" \
   "perl" \
   "pkg-config" \
@@ -111,7 +112,11 @@ fi
 sudo apt update
 sudo apt install "${pck[@]}" -y
 pip3 install "${py_pck[@]}"
+
+### alacritty
 cargo install alacritty
+sudo update-alternatives --install /usr/bin/alacritty alacritty "${HOME}/.cargo/bin/alacritty" 50
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/alacritty 50
 
 function backup_and_link() {
     if [ -f "${2}" ]; then
