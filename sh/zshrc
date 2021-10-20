@@ -30,3 +30,4 @@ zstyle ':vcs_info:git:*' formats '%b'
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 source ~/.aliases
+source ~/.profile

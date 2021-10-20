@@ -56,10 +56,13 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-vinegar'
 
 """ Editing
+Plug 'editorconfig/editorconfig-vim'
+Plug 'embear/vim-localvimrc'
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-sleuth'
 
 """ Status bar
 Plug 'itchyny/lightline.vim'
@@ -306,12 +309,14 @@ nnoremap <space> i<space><esc>l
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Termdebug
-let g:termdebugger = "gdb-multiarch"
+packadd termdebug
+
+" let g:termdebugger = "gdb-multiarch"
 " C(++) debugging
 " See https://neovim.io/doc/user/nvim_terminal_emulator.html
 " For a nice split window view
 let g:termdebug_popup = 0
-let g:termdebug_wide = 163
+let g:termdebug_wide = 1
 " Map ESC to exit terminal mode
 tnoremap <Esc> <C-\><C-n>
 nnoremap <silent> <leader>b :Break<CR>
@@ -438,6 +443,12 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Editorconfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:EditorConfig_verbose = 1
+" Sleuth
+let g:sleuth_automatic = 0
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 
 autocmd FileType c   setlocal commentstring=/*\ %s\ */
@@ -459,6 +470,16 @@ command! Q q!
 command! ShellRun :! ./% 
 
 " Compile and run
-command! GccRun :!g++ -Wall -Wextra -std=c++17 -g3 $(pkg-config --cflags glib-2.0 gio-2.0) % $(pkg-config --libs glib-2.0 gio-2.0) && time ./a.out
-command! GccRun32 :!g++ -Wall -Wextra -std=c++17 -m32 -g3 % && time ./a.out
+command! GccRun :!gcc -Wall -Wextra -std=c11 -g3
+    \ $(pkg-config --cflags glib-2.0 gio-2.0 gudev-1.0 fwupdplugin libxml-2.0 libudev)
+    \ %
+    \ $(pkg-config --libs glib-2.0 gio-2.0 gudev-1.0 fwupdplugin libxml-2.0 libudev)
+    \ && time ./a.out
+
+command! GppRun :!g++ -Wall -Wextra -std=c++17 -g3
+    \ $(pkg-config --cflags glib-2.0 gio-2.0 fwupdplugin)
+    \ % $(pkg-config --libs glib-2.0 gio-2.0 fwupdplugin)
+    \ && time ./a.out
+
+command! GccRun32 :!gcc -Wall -Wextra -std=c++17 -m32 -g3 % && time ./a.out
 
