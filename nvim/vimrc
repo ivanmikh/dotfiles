@@ -36,6 +36,9 @@ set suffixes-=.h
 
 " Give more space for displaying messages.
 set cmdheight=2
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 " - For Neovim: stdpath('data') . '/plugged'
@@ -197,10 +200,10 @@ set relativenumber
 " highlight linenr term=bold cterm=none ctermfg=darkgrey ctermbg=none gui=none guifg=darkgrey guibg=none
 
 set nohlsearch
-" search in selected text
-vnoremap <leader>/ <esc>/\%V
+
 " search selected text
 vnoremap <leader>* y/\V<C-R>=escape(@",'/\')<CR><CR>
+vnoremap <leader># y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 command! -nargs=0 F :FZF
 
