@@ -39,6 +39,9 @@ set cmdheight=2
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
+
+" Always show statusline
+set laststatus=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 " - For Neovim: stdpath('data') . '/plugged'
@@ -48,7 +51,7 @@ call plug#begin('~/.vim/plugged')
 " Plugins
 
 """ LSP
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vim-syntastic/syntastic'
 
@@ -56,7 +59,6 @@ Plug 'vim-syntastic/syntastic'
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'gauteh/vim-cppman'
 Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-vinegar'
 
 """ Editing
 Plug 'editorconfig/editorconfig-vim'
@@ -113,10 +115,10 @@ nmap <End> $
 " Clipboard 
 
 " Use system clipboard
-" set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Leave contents of system clipboard on exit
-autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
+"autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
 
 " copy selection to system clipboard
 vnoremap <Enter> "+y
@@ -140,7 +142,7 @@ nnoremap x "_x
 vnoremap x "_x
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" keys and spaces
+" tabs and spaces
 
 " fix backspace
 set bs=indent,eol,start
@@ -202,8 +204,8 @@ set relativenumber
 set nohlsearch
 
 " search selected text
-vnoremap <leader>* y/\V<C-R>=escape(@",'/\')<CR><CR>
-vnoremap <leader># y/\V<C-R>=escape(@",'/\')<CR><CR>
+vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
+vnoremap # y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 command! -nargs=0 F :FZF
 
@@ -451,6 +453,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:EditorConfig_verbose = 1
 " Sleuth
 let g:sleuth_automatic = 0
+" Netrw
+nmap - :Explore<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 

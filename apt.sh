@@ -84,6 +84,7 @@ pck=(
   "tmux" \
   "trash-cli" \
   "unzip" \
+  "vim-gtk" \
   "yarn" \
   "yasm" \
   "zsh"
