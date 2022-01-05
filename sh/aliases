@@ -41,6 +41,8 @@ alias sudo='sudo '
 
 alias wttr='curl http://wttr.in/Vancouver'
 
+alias logdate='date +%Y%m%d_%H%M%S'
+
 # tmux sessions with ranger and nvimserver
 alias fm="tmux new-session ranger \; rename-window fm"
 

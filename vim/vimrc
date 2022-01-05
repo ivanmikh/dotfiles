@@ -54,20 +54,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vim-syntastic/syntastic'
-
-""" Navigation
-Plug 'ericcurtin/CurtineIncSw.vim'
-Plug 'gauteh/vim-cppman'
 Plug 'majutsushi/tagbar'
 
 """ Editing
-Plug 'editorconfig/editorconfig-vim'
-Plug 'embear/vim-localvimrc'
-Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ciaranm/detectindent'
 
 """ Status bar
 Plug 'itchyny/lightline.vim'
@@ -81,7 +76,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug '/usr/bin/fzf'
-Plug 'tpope/vim-repeat'
 
 " Initialize plugin system
 call plug#end()
@@ -187,6 +181,9 @@ set path+=**
 
 " nice way to show search results
 set wildmenu
+
+" show search count
+set shortmess=filnxtToOFc
 
 " the following are commented out as they cause vim to behave a lot
 " differently from regular vi. they are highly recommended though.
@@ -299,18 +296,19 @@ let g:lightline = {
 \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CurtineIncSw
-
-" Switch header/source
-map <F4> :call CurtineIncSw()<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
 
 " Save file
 nnoremap <Esc><Esc> <Esc>:w<CR>
 " Space in normal mode
 nnoremap <space> i<space><esc>l
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Editorconfig
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*', '.git']
+au FileType gitcommit let b:EditorConfig_disable = 1
+au FileType fugitive let b:EditorConfig_disable = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Termdebug
