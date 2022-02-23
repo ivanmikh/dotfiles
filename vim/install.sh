@@ -17,10 +17,10 @@ ln -sf ${dotfiles}/coc-settings.json ~/.config/nvim/coc-settings.json
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-nvim -c PlugUpdate -c 'CocInstall coc-sh' -c 'CocInstall coc-pyright' 
-cd ~/.vim/plugged/coc.nvim
-npm install esbuild
-npm run build
-cd -
+# Node.js LTS (v16.x):
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+nvim -c PlugUpdate
 nvim -c 'CocInstall coc-sh' -c 'CocInstall coc-pyright' 
 

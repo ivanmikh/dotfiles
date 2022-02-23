@@ -135,6 +135,12 @@ backup_and_link "${dotfiles}"/sh/zshrc ~/.zshrc
 ### aliases
 backup_and_link "${dotfiles}"/sh/aliases ~/.aliases
 
+### default shell
+sudo chsh --shell /bin/zsh ${USER}
+
+### caps to esc
+gsettings set org.gnome.desktop.input-sources xkb-options \[\'caps:escape\'\]
+
 ### ranger
 mkdir -p ~/.config/ranger
 backup_and_link "${dotfiles}"/ranger/commands.py ~/.config/ranger/commands.py
