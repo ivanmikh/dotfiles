@@ -35,7 +35,7 @@ set noshowmode
 set suffixes-=.h
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=1
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -52,7 +52,7 @@ call plug#begin('~/.vim/plugged')
 
 """ LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+"Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'vim-syntastic/syntastic'
 Plug 'majutsushi/tagbar'
 
@@ -109,10 +109,15 @@ nmap <End> $
 " Clipboard 
 
 " Use system clipboard
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 
 " Leave contents of system clipboard on exit
 "autocmd VimLeave * call system("xclip -sel clip", getreg('+'))
+
+" Copy filepath (:linenumber)
+command! -nargs=0 CopyFp  :let @+=expand("%":p)
+command! -nargs=0 CopyFn  :let @+=expand("%")
+command! -nargs=0 CopyFnLn :let @+=expand("%") . ':' . line(".")
 
 " copy selection to system clipboard
 vnoremap <Enter> "+y
@@ -134,6 +139,10 @@ nmap <leader>cp :let @+ = expand("%:p:a")<cr>
 vnoremap p "_dP
 nnoremap x "_x
 vnoremap x "_x
+
+" Make shifts keep selection
+vnoremap < <gv
+vnoremap > >gv
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tabs and spaces
@@ -306,9 +315,9 @@ nnoremap <space> i<space><esc>l
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editorconfig
 
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*', '.git']
-au FileType gitcommit let b:EditorConfig_disable = 1
-au FileType fugitive let b:EditorConfig_disable = 1
+"let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*', '.git']
+"au FileType gitcommit let b:EditorConfig_disable = 1
+"au FileType fugitive let b:EditorConfig_disable = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Termdebug
@@ -453,6 +462,7 @@ let g:EditorConfig_verbose = 1
 let g:sleuth_automatic = 0
 " Netrw
 nmap - :Explore<CR>
+let g:netrw_sort_sequence = "[\/]$,[.cpp.c.h]$"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 
