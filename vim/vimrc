@@ -42,6 +42,9 @@ set lazyredraw
 
 " Always show statusline
 set laststatus=2
+
+" Search for tags recursively
+set tags=./tags;
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 " - For Neovim: stdpath('data') . '/plugged'
