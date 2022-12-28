@@ -45,6 +45,9 @@ set laststatus=2
 
 " Search for tags recursively
 set tags=./tags;
+
+" Look for local vimrc
+set exrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 " - For Neovim: stdpath('data') . '/plugged'
@@ -207,7 +210,7 @@ set autowrite       " automatically save before commands like :next and :make
 set mouse=a         " enable mouse usage (all modes)
 
 set number
-set relativenumber
+"set relativenumber
 " highlight linenr term=bold cterm=none ctermfg=darkgrey ctermbg=none gui=none guifg=darkgrey guibg=none
 
 set nohlsearch
@@ -482,7 +485,7 @@ set scrollopt=hor,ver,jump
 nnoremap <c-z> :echo "Type quit to exit Vim"<CR>
 
 " Quit without saving
-command! Q q!
+command! Q qa!
 
 " Run current file
 command! ShellRun :! ./% 

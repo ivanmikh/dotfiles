@@ -19,11 +19,13 @@ pck=(
   "bzip2" \
   "cargo" \
   "ccls" \
+  "clang" \
+  "clang-tools" \
+  "clangd" \
   "cmake" \
   "cpio" \
   "crash" \
   "cscope" \
-  "universal-ctags" \
   "curl" \
   "default-jre" \
   "fakeroot" \
@@ -57,6 +59,7 @@ pck=(
   "libtool" \
   "libxcb-xfixes0-dev" \
   "llvm" \
+  "llvm" \
   "m4" \
   "make" \
   "makedumpfile" \
@@ -83,6 +86,7 @@ pck=(
   "texinfo" \
   "tmux" \
   "trash-cli" \
+  "universal-ctags" \
   "unzip" \
   "vim-gtk" \
   "yarn" \

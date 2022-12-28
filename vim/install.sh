@@ -22,5 +22,6 @@ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 nvim -c PlugUpdate
-nvim -c 'CocInstall coc-sh' -c 'CocInstall coc-pyright' 
-
+nvim -c 'CocInstall coc-sh' \
+     -c 'CocInstall coc-pyright' \
+     -c 'CocInstall coc-clangd'
