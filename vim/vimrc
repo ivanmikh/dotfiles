@@ -80,8 +80,6 @@ call plug#begin('~/.vim/plugged')
 if has("nvim")
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
-Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'vim-syntastic/syntastic'
 Plug 'majutsushi/tagbar'
 
 """ All hail tpope
@@ -99,10 +97,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 
+""" Tmux
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug '/usr/bin/fzf'
 
 " Initialize plugin system
 call plug#end()
@@ -193,15 +189,17 @@ set listchars=tab:→\ ,eol:¬,space:·,trail:-,extends:❯,precedes:❮
 set showbreak=↪
 
 " tab control
-"set expandtab               " insert tabs rather than spaces for <tab>
-"set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-"set tabstop=4               " the visible width of tabs
-"set softtabstop=4           " edit as if the tabs are 4 characters wide
-"set shiftwidth=4            " number of spaces to use for indent and unindent
+set expandtab               " insert spaces rather than tabs for <tab>
+set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+set tabstop=4               " the visible width of tabs
+set softtabstop=4           " edit as if the tabs are 4 characters wide
+set shiftwidth=4            " number of spaces to use for indent and unindent
 set shiftround              " round indent to a multiple of 'shiftwidth'
 set completeopt+=menu,noselect
 
 set cindent
+
+command SetTab :set expandtab | :set smarttab | :set tabstop=4 | :set softtabstop=4 | :set shiftwidth=4 | :set shiftround
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " theme and view
@@ -367,27 +365,6 @@ nnoremap <silent> <leader>b :Break<CR>
 nnoremap <silent> <leader>bc :Clear<CR>
 nnoremap <silent> <leader>c :Continue<CR>
 " map ,w :call TermDebugSendCommand('where')<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" c++ syntax highlighting
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-
-" syntastic
-let g:syntastic_mode_map = {
-    \ "mode": "passive",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": [] }
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_cpp_checkers = ['clang-format']
-let g:syntastic_c_checkers = ['clang-format']
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_sh_checkers = ['shellcheck']
-nmap <silent> <leader>sc :SyntasticCheck<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COC

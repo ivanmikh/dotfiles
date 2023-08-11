@@ -3,6 +3,7 @@
     "clangd.arguments": ["-j=4"],
     "clangd.signature.target": "echo",
     "clangd.semanticHighlighting": true,
+    "semanticTokens.filetypes": ["c", "cpp", "h"],
 
     "pyright.inlayHints.functionReturnTypes" : false,
     "pyright.inlayHints.variableTypes": false,
