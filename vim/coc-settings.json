@@ -1,13 +1,14 @@
 {
     "clangd.enabled": true,
-    "clangd.arguments": ["-j=4"],
+    "clangd.arguments": ["-j=2"],
     "clangd.signature.target": "echo",
     "clangd.semanticHighlighting": true,
-    "semanticTokens.filetypes": ["c", "cpp", "h"],
+    "semanticTokens.filetypes": ["c", "cpp", "h", "x"],
 
     "pyright.inlayHints.functionReturnTypes" : false,
     "pyright.inlayHints.variableTypes": false,
+    "python.analysis.stubPath": "/home/ivan/python-type-stubs/stubs",
 
     "inlayHint.enable": false,
-    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd"
+    "clangd.path": "/usr/bin/clangd"
 }

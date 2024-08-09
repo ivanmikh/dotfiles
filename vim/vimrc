@@ -84,10 +84,11 @@ Plug 'majutsushi/tagbar'
 
 """ All hail tpope
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sleuth'
 
 """ Status bar
 Plug 'itchyny/lightline.vim'
@@ -99,6 +100,10 @@ Plug 'tpope/vim-fugitive'
 
 """ Tmux
 Plug 'christoomey/vim-tmux-navigator'
+
+""" fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -243,7 +248,24 @@ set nohlsearch
 vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
 vnoremap # y/\V<C-R>=escape(@",'/\')<CR><CR>
 
-command! -nargs=0 F :FZF
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf
+
+let g:fzf_history_dir = '~/.config/fzf-vim-history'
+
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number -- '.fzf#shellescape(<q-args>),
+  \   fzf#vim#with_preview({'dir': systemlist('git -C '.expand('%:p:h').' rev-parse --show-toplevel')[0] }), <bang>0)
+
+command! -bang -nargs=* Rgr
+    \ call fzf#vim#grep(
+    \ 	"rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1,
+    \   fzf#vim#with_preview({
+    \     'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2],
+    \     'options': ['--prompt', 'RG> '],
+    \   }),
+    \   <bang>0),
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Splits
@@ -275,11 +297,7 @@ nnoremap ]T :tablast<CR>
 
 " Close buffer and keep split
 set hidden
-"nnoremap <c-c> :bp\|bd #<CR>
-"nnoremap <c-c> :bp<cr>:bd #<cr>
 nnoremap gb :ls<CR>:b<space>
-nnoremap gvb :ls<CR>:vert sb<space>
-nnoremap gsb :ls<CR>:sb<space>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Opening a file
@@ -463,7 +481,14 @@ let g:EditorConfig_verbose = 1
 let g:sleuth_automatic = 0
 " Netrw
 nmap - :Explore<CR>
-let g:netrw_sort_sequence = "[\/]$,[.cpp.c.h]$"
+" sort is affecting only: directories on the top, files below
+let g:netrw_sort_sequence = '[\/]$,*'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Git
+
+let g:github_enterprise_urls = ['https://eos2git.cec.lab.emc.com']
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 
@@ -486,13 +511,12 @@ command! Q qa!
 command! ShellRun :! ./% 
 
 " Compile and run
-command! GccRun :!gcc -Wall -Wextra -std=c11 -ggdb
+command! GccRun :!gcc -Wall -Wextra -std=c11 -ggdb -pthread
     \ %
     \ && time ./a.out
 
-command! GppRun :!g++ -Wall -Wextra -std=c++17 -ggdb
-    \ %
-    \ && time ./a.out
+command! Gpp    :!g++ -Wall -Wextra -std=c++17 -ggdb -pthread %
+command! GppRun :!g++ -Wall -Wextra -std=c++17 -ggdb -pthread % && time ./a.out
 
 command! GccRun32 :!gcc -Wall -Wextra -std=c++17 -m32 -ggdb % && time ./a.out
 
