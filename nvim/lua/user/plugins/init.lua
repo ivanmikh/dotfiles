@@ -4,25 +4,27 @@ return {
   "nvim-lua/plenary.nvim",
   "nvim-lua/popup.nvim",
 
-  'tpope/vim-sleuth',     -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-commentary', -- Comments stuff out with gc(c)
-  'tpope/vim-repeat',     -- Extends '.' to plugins
   'tpope/vim-fugitive',   -- Git plugin
-  'tpope/vim-unimpaired', -- ][ shortcuts
-  'tpope/vim-rhubarb',    -- GitHub commands (GBrowse)
-
   'airblade/vim-gitgutter', -- Git diff in sign column
   'junegunn/gv.vim',        -- Git commit history
-  'majutsushi/tagbar',      -- Tag bar
+  'tpope/vim-rhubarb',    -- GitHub commands (GBrowse)
 
-    -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  'tpope/vim-sleuth',     -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-unimpaired', -- ][ shortcuts
 
-  require("user.plugins.lsp"),
   require("user.plugins.autocompletion"),
-  require("user.plugins.mini"),
-  require("user.plugins.telescope"),
+  require("user.plugins.comment"),
+  require("user.plugins.lsp"),
+  require("user.plugins.lualine"),
   require("user.plugins.neo-tree"),
+  require("user.plugins.telescope"),
+  require("user.plugins.todo-comments"),
+  require("user.plugins.treesitter"),
+  require("user.plugins.which-key"),
+
+  --require("user.plugins.mini"),
+  --require("user.plugins.gitsigns"),
+  --require("user.plugins.neogit"),
 
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins

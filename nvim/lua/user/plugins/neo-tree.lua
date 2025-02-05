@@ -8,11 +8,18 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal position=current<CR>', desc = 'NeoTree reveal position=current', silent = true },
-    { '<leader>b', ':Neotree toggle show buffers right<CR>', desc = 'NeoTree show buffers', silent = true },
+    { '\\', ':Neotree filesystem reveal float<CR>', desc = 'NeoTree filesystem float', silent = true },
+    { '-', ':Neotree filesystem show reveal toggle left<CR>', desc = 'NeoTree filesystem left', silent = true },
+    { '<leader>b', ':Neotree buffers reveal float<CR>', desc = 'NeoTree show buffers', silent = true },
   },
   opts = {
     filesystem = {
+      filtered_items = {
+        visible = true,
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_hidden = false,
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',

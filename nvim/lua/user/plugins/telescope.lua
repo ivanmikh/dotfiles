@@ -5,7 +5,8 @@ local M = {
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    { -- If encountering errors, see telescope-fzf-native README for installation instructions
+    {
+       -- If encountering errors, see telescope-fzf-native README for installation instructions
       'nvim-telescope/telescope-fzf-native.nvim',
 
       -- `build` is used to run some command when the plugin is installed/updated.
@@ -18,14 +19,17 @@ local M = {
         return vim.fn.executable 'make' == 1
       end,
     },
-    { 'nvim-telescope/telescope-ui-select.nvim' },
+    {
+      'nvim-telescope/telescope-ui-select.nvim' },
 
-    -- Useful for getting pretty icons, but requires a Nerd Font.
+       -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   }
 }
 
 function M.config()
+  local actions = require "telescope.actions"
+
   -- Telescope is a fuzzy finder that comes with a lot of different things that
   -- it can fuzzy find! It's more than just a "file finder", it can search
   -- many different aspects of Neovim, your workspace, LSP, and more!
@@ -51,12 +55,51 @@ function M.config()
     -- You can put your default mappings / updates / etc. in here
     --  All the info you're looking for is in `:help telescope.setup()`
     --
-    -- defaults = {
-    --   mappings = {
-    --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-    --   },
-    -- },
-    -- pickers = {}
+    defaults = {
+      mappings = {
+        i = {
+          ["<C-n>"] = actions.cycle_history_next,
+          ["<C-p>"] = actions.cycle_history_prev,
+
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+        },
+        n = {
+          ["<esc>"] = actions.close,
+          ["j"] = actions.move_selection_next,
+          ["k"] = actions.move_selection_previous,
+          ["q"] = actions.close,
+        },
+      },
+    },
+    pickers = {
+      live_grep = {
+        theme = "dropdown",
+      },
+
+      grep_string = {
+        theme = "dropdown",
+      },
+
+      find_files = {
+        theme = "dropdown",
+        previewer = false,
+      },
+
+      buffers = {
+        theme = "dropdown",
+        previewer = false,
+        initial_mode = "insert",
+        mappings = {
+          i = {
+            ["<C-d>"] = actions.delete_buffer,
+          },
+          n = {
+            ["dd"] = actions.delete_buffer,
+          },
+        },
+      },
+    },
     extensions = {
       ['ui-select'] = {
         require('telescope.themes').get_dropdown(),
@@ -79,7 +122,7 @@ function M.config()
   vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
   vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
   vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+  vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
   -- Slightly advanced example of overriding default behavior and theme
   vim.keymap.set('n', '<leader>/', function()

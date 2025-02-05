@@ -14,6 +14,9 @@ local M = {
 
     -- Allows extra capabilities provided by nvim-cmp
     'hrsh7th/cmp-nvim-lsp',
+
+    -- clang tools
+    "p00f/clangd_extensions.nvim",
   }
 }
 
@@ -63,6 +66,10 @@ function M.config()
       -- Rename the variable under your cursor.
       --  Most Language Servers support renaming across files, etc.
       map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+
+      map('gh', ':ClangdSwitchSourceHeader<CR>', '[G]oto [H]eader')
+
+      map('<leader>cf', vim.lsp.buf.format, '[C]ode [F]ormat', { 'n', 'x' })
 
       -- Execute a code action, usually your cursor needs to be on top of an error
       -- or a suggestion from your LSP for this to activate.
