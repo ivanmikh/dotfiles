@@ -7,8 +7,12 @@
 
     "pyright.inlayHints.functionReturnTypes" : false,
     "pyright.inlayHints.variableTypes": false,
-    "python.analysis.stubPath": "/home/ivan/python-type-stubs/stubs",
+    "pyright.inlayHints.reportAttributeAccessIssue": "none",
+    "python.analysis.stubPath": "/home/ivan/.config/python-type-stubs",
 
     "inlayHint.enable": false,
-    "clangd.path": "/usr/bin/clangd"
+    "clangd.path": "/usr/bin/clangd",
+
+    "rust-analyzer.enable": true,
+    "workspace.ignoredFolders": [ "$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**" ]
 }

@@ -515,8 +515,8 @@ command! GccRun :!gcc -Wall -Wextra -std=c11 -ggdb -pthread
     \ %
     \ && time ./a.out
 
-command! Gpp    :!g++ -Wall -Wextra -std=c++17 -ggdb -pthread %
-command! GppRun :!g++ -Wall -Wextra -std=c++17 -ggdb -pthread % && time ./a.out
+command! Gpp    :!g++ -Wall -Wextra -std=c++20 -ggdb -pthread %
+command! GppRun :!g++ -Wall -Wextra -std=c++20 -ggdb -pthread % && time ./a.out
 
-command! GccRun32 :!gcc -Wall -Wextra -std=c++17 -m32 -ggdb % && time ./a.out
+command! GccRun32 :!gcc -Wall -Wextra -std=c11 -m32 -ggdb % && time ./a.out
 
