@@ -86,6 +86,11 @@ function M.config()
         previewer = false,
       },
 
+      lsp_references = {
+        fname_width = 80,
+        show_line = false
+      },
+
       buffers = {
         theme = "dropdown",
         previewer = false,

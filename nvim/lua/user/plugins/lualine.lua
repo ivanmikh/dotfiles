@@ -3,6 +3,13 @@ local M = {
 }
 
 function M.config()
+  local function location()
+    local line = vim.fn.line('.')
+    local total = vim.fn.line('$')
+    local col = vim.fn.charcol('.')
+    return string.format('%3d:%-2d/ %d', line, col, total)
+  end
+
   require('lualine').setup {
     options = {
         component_separators = { left = "", right = "" },
@@ -29,6 +36,12 @@ function M.config()
                      -- 3: Absolute path, with tilde as the home directory
                      -- 4: Filename and parent dir, with tilde as the home directory
           shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+            symbols = {
+              modified = '[+]',      -- Text to show when the file is modified.
+              readonly = '[RO]',      -- Text to show when the file is non-modifiable or readonly.
+              unnamed = '[No Name]', -- Text to show for unnamed buffers.
+              newfile = '[New]',     -- Text to show for newly created file before first write
+            }
         }
       },
       lualine_x = {
@@ -47,8 +60,8 @@ function M.config()
           icon = ''
         }
       },
-      lualine_y = {'progress'},
-      lualine_z = {'location'}
+      lualine_y = { 'progress' },
+      lualine_z = { location }
     },
     extensions = { "quickfix", "man", "fugitive" },
   }

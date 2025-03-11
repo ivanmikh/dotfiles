@@ -17,6 +17,7 @@ return {
   require("user.plugins.lsp"),
   require("user.plugins.lualine"),
   require("user.plugins.neo-tree"),
+  require("user.plugins.outline"),
   require("user.plugins.telescope"),
   require("user.plugins.todo-comments"),
   require("user.plugins.treesitter"),
