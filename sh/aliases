@@ -33,9 +33,6 @@ alias l='ls -vCF'
 # Copy to clipboard
 alias copy='xclip -sel clip'
 
-alias vimserver='vim --servername VIM'
-alias nvimserver='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
-
 alias del=trash
 alias sudo='sudo '
 
@@ -46,10 +43,6 @@ alias logdate='date +%Y%m%d_%H%M%S'
 # tmux sessions with ranger and nvimserver
 alias fm="tmux new-session ranger \; rename-window fm"
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # ranger
 ranger_cd() {
     temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
@@ -59,4 +52,5 @@ ranger_cd() {
     fi
     rm -f -- "$temp_file"
 }
-alias lf=ranger_cd
+
+source ~/.profile
