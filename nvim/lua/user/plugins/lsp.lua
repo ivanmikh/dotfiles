@@ -129,6 +129,30 @@ function M.config()
   --   end
   --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
   -- end
+  local default_diagnostic_config = {
+    signs = {
+      text = {
+        -- [x.ERROR] = icons.diagnostics.BoldError,
+        -- [x.WARN] = icons.diagnostics.BoldWarning,
+        -- [x.INFO] = icons.diagnostics.BoldInformation,
+        -- [x.HINT] = icons.diagnostics.BoldHint,
+      },
+    },
+    virtual_text = { prefix = "" },
+    update_in_insert = false,
+    underline = true,
+    severity_sort = true,
+    float = {
+      focusable = true,
+      style = "minimal",
+      border = "rounded",
+      source = "always",
+      header = "",
+      prefix = "",
+    },
+  }
+
+  vim.diagnostic.config(default_diagnostic_config)
 
   -- LSP servers and clients are able to communicate to each other what features they support.
   --  By default, Neovim doesn't support everything that is in the LSP specification.
@@ -168,6 +192,8 @@ function M.config()
       },
     },
   }
+
+  require'lspconfig'.bashls.setup{}
 
   -- Ensure the servers and tools above are installed
   --
