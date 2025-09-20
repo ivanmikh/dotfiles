@@ -1,0 +1,25 @@
+# show icons
+set icons true
+
+# automatic refresh
+set period 1
+
+# file and dir size
+set info size
+set dircounts
+
+# show hidden files
+set hidden
+
+# mkdir command. See wiki if you want it to select created dir
+map a :push %mkdir<space>
+
+# select unix or win
+cmd source_config ${{
+    if [ "$(uname -s)" = Linux ]; then
+        lf -remote "send $id source ~/.config/lfrc/unix.lfrc"
+    else
+        lf -remote "send $env:id source '$env:APPDATA\lf\win32.lfrc'"
+    fi
+}}
+source_config
