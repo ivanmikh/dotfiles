@@ -22,35 +22,23 @@ export TERMCMD='alacritty'
 export PYTHONSTARTUP="/home/ivan/.pythonrc.py"
 export PROMPT_DIRTRIM=3
 
-# Change the prompt when you open a shell from inside ranger
-[ -n "$RANGER_LEVEL" ] && PS1="$PS1"'(in ranger) '
-
 # some more ls aliases
 alias ll='ls -vFlAh'
 alias la='ls -vFlAh'
 alias l='ls -vCF'
-
-# Copy to clipboard
-alias copy='xclip -sel clip'
 
 alias del=trash
 alias sudo='sudo '
 
 alias wttr='curl http://wttr.in/Vancouver'
 
-alias logdate='date +%Y%m%d_%H%M%S'
-
 # tmux sessions with ranger and nvimserver
-alias fm="tmux new-session ranger \; rename-window fm"
+alias fm="tmux new-session lf"
 
-# ranger
-ranger_cd() {
-    temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
-    ranger --choosedir="$temp_file" -- "${@:-$PWD}"
-    if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
-        cd -- "$chosen_dir"
-    fi
-    rm -f -- "$temp_file"
-}
+# lf
+alias lf='lfcd'
+
+# zoxide
+eval "$(zoxide init zsh)"
 
 source ~/.profile
