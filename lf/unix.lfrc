@@ -17,33 +17,28 @@ set shellopts '-eu'
 # commands accordingly.
 set ifs "\n"
 
-# leave some space at the top and the bottom of the screen
-set scrolloff 10
-
 # Use the `dim` attribute instead of underline for the cursor in the preview pane
-set cursorpreviewfmt "\033[7;2m"
+#set cursorpreviewfmt "\033[7;2m"
 
-# use enter for shell commands
-map <enter> shell
+# Common paths
+map gd cd ~/Documents
+map gD cd ~/Downloads
+map g/ cd /
+map gt cd /tmp
+map gm cd /mnt
 
 # execute current file (must be executable)
 map x $$f
 map X !$f
-
-# mkdir command. See wiki if you want it to select created dir
-map a :push %mkdir<space>
-
-# use '<delete>' key for either 'trash' or 'delete' command
-map <delete> trash
-
-# source local mappings
-source ~/.config/lf/local
 
 # tmux
 map S &tmux neww -c $PWD
 cmd vsp &tmux splitw -h -c $PWD
 cmd  sp &tmux splitw -v -c $PWD
 map <c-n> &tmux splitw -v -c $PWD lf
+
+# Warn about nested instances
+&[ "$LF_LEVEL" -eq 1 ] || lf -remote "send $id echoerr \"Warning: You're in a nested lf instance!\""
 
 # extract the current file with the right command
 # (xkcd link: https://xkcd.com/1168/)
@@ -90,7 +85,6 @@ cmd fzf_cd ${{
         lf -remote "send $id $cmd \"$res\""
     fi
 }}
-map ff :fzf_cd
 
 # fzf + ripgrep
 cmd fzf_rg ${{
@@ -101,13 +95,88 @@ cmd fzf_rg ${{
         --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\''s/\\/\\\\/g;s/"/\\"/g'\'')\"")' \
         --preview='bat --color=always --highlight-line={2} -- {1}'
 }}
+
+# remap search keys
+map f
+map ff :fzf_cd
 map fg :fzf_rg
 
 # trash-cli
 cmd trash %trash-put -- $fx
+# use '<delete>' key for 'trash'
+map <delete> trash
+map D trash
 
 # atool
 cmd extract ${{
     set -f
     atool -x $fx
 }}
+
+# y (select for copy) and P to paste soft-link
+# d (select for cut) and P to paste hard-link
+cmd link %{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echo no files to link"
+        exit 0
+    fi
+    case "$mode" in
+        # symbolically copy mode is indicating a soft link
+        copy) ln -sr -t . -- "$@";;
+        # while a move mode is indicating a hard link
+        move) ln -t . -- "$@";;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+map P :link
+
+# follow symlink
+cmd follow-link %{{
+    lf -remote "send $id select \"$(readlink -- "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+map gL follow-link
+
+# edit and reload config file
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+# select all files or directories
+cmd select-type &{{
+    set -f
+    [ "$#" -eq 0 ] && exit
+    files="$(
+        find "$PWD" -mindepth 1 -maxdepth 1 -type "$1" $([ "$lf_hidden" = false ] && printf '%s\n' -not -name '.*') -print0 |
+        sed -z 's/\\/\\\\/g;s/"/\\"/g;s/\n/\\n/g;s/^/"/;s/$/"/' |
+        tr '\0' ' ')"
+
+    lf -remote "send $id :unselect; toggle $files"
+}}
+cmd select-dirs select-type d
+cmd select-files select-type f
+
+# bulk rename with qmv
+cmd bulk-rename ${{
+    clear
+    qmv -d -- $fx
+    lf -remote "send $id unselect"
+}}
+
+# copy to clipboard
+cmd yank-file $printf '%s' "$f" | wl-copy
+cmd yank-paths $printf '%s' "$fx" | wl-copy
+cmd yank-dirname &printf '%s' "$PWD" | wl-copy
+cmd yank-basename &basename -a -- $fx | head -c-1 | wl-copy
+cmd yank-basename-without-extension &basename -a -- $fx | sed -E 's/\.[^.]+$//' | head -c-1 | wl-copy
+
+# remap yank
+map y
+map yy copy
+map yp yank-paths
+map yd yank-dirname
+map yb yank-basename

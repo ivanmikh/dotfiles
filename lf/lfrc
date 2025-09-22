@@ -14,12 +14,17 @@ set hidden
 # mkdir command. See wiki if you want it to select created dir
 map a :push %mkdir<space>
 
-# select unix or win
-cmd source_config ${{
-    if [ "$(uname -s)" = Linux ]; then
-        lf -remote "send $id source ~/.config/lfrc/unix.lfrc"
-    else
-        lf -remote "send $env:id source '$env:APPDATA\lf\win32.lfrc'"
-    fi
-}}
-source_config
+# use enter for shell commands
+map <enter> shell
+
+# leave some space at the top and the bottom of the screen
+set scrolloff 10
+
+# unmap the default rename keybinding
+map i rename
+map I :rename; cmd-home
+map A :rename; cmd-end
+map C :rename; cmd-end; cmd-delete-home
+
+#source ~/.config/lf/win32.lfrc
+source ~/.config/lf/unix.lfrc

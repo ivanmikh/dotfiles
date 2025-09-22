@@ -33,6 +33,3 @@ cmd edit-config ${{
     & $env:EDITOR $env:APPDATA\lf\lfrc
     lf -remote "send $env:id source '$env:APPDATA\lf\lfrc'"
 }}
-map C edit-config
-
-lf -remote "send $env:id source '$env:APPDATA\lf\local'"
