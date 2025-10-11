@@ -17,11 +17,11 @@ compinit
 # case insensitive path-completion 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
+source ~/.aliases
+
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
-bindkey -M emacs '\C-f' fzf-cd-widget
-
-source ~/.aliases
+#bindkey -M emacs '\C-f' fzf-cd-widget
 
 #eval "$(starship init zsh)"
 eval "$(oh-my-posh init zsh --config ~/.dotfiles/sh/stelbent.minimal.omp.json)"

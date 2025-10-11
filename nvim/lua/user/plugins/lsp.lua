@@ -171,11 +171,18 @@ function M.config()
   --  - settings (table): Override the default settings passed when initializing the server.
   --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
   local servers = {
-    clangd = {},
     pyright = {},
     mesonlsp = {},
     neocmake = {},
+    bashls = {},
     -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+
+    clangd = {
+      cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+      init_options = {
+        fallbackFlags = { '-std=c++17' },
+      },
+    },
 
     lua_ls = {
       -- cmd = { ... },
@@ -192,8 +199,6 @@ function M.config()
       },
     },
   }
-
-  require'lspconfig'.bashls.setup{}
 
   -- Ensure the servers and tools above are installed
   --
