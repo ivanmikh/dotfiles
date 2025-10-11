@@ -16,6 +16,7 @@ return {
   require("user.plugins.comment"),
   require("user.plugins.lsp"),
   require("user.plugins.lualine"),
+  require("user.plugins.markdown-toc"),
   require("user.plugins.neo-tree"),
   require("user.plugins.outline"),
   require("user.plugins.telescope"),
