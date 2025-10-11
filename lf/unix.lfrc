@@ -97,9 +97,8 @@ cmd fzf_rg ${{
 }}
 
 # remap search keys
-map f
-map ff :fzf_cd
-map fg :fzf_rg
+map f :fzf_cd
+map F :fzf_rg
 
 # trash-cli
 cmd trash %trash-put -- $fx
@@ -175,8 +174,7 @@ cmd yank-basename &basename -a -- $fx | head -c-1 | wl-copy
 cmd yank-basename-without-extension &basename -a -- $fx | sed -E 's/\.[^.]+$//' | head -c-1 | wl-copy
 
 # remap yank
-map y
-map yy copy
-map yp yank-paths
-map yd yank-dirname
-map yb yank-basename
+#map yy copy
+#map yp yank-paths
+#map yd yank-dirname
+#map yb yank-basename

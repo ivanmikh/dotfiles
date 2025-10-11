@@ -21,7 +21,6 @@ map <enter> shell
 set scrolloff 10
 
 # unmap the default rename keybinding
-map i rename
 map I :rename; cmd-home
 map A :rename; cmd-end
 map C :rename; cmd-end; cmd-delete-home
