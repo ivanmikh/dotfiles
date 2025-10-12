@@ -34,7 +34,7 @@ text = "0xeaeaea"
 TERM = "xterm-256color"
 
 [font]
-size = 8.0
+size = 10.0
 
 [font.bold]
 family = "Hack"

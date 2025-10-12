@@ -46,3 +46,6 @@ alias lf='lfcd'
 eval "$(zoxide init zsh)"
 
 source ~/.profile
+
+# Add this to /etc/environment to fix blurry text in web browsers
+# FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"

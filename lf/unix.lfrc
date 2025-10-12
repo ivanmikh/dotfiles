@@ -26,6 +26,7 @@ map gD cd ~/Downloads
 map g/ cd /
 map gt cd /tmp
 map gm cd /mnt
+map gu cd /usr
 
 # execute current file (must be executable)
 map x $$f
