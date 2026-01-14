@@ -174,8 +174,23 @@ function M.config()
     -- pyright = {},
     mesonlsp = {},
     neocmake = {},
-    -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+    bashls = {},
 
+    rust_analyzer = {
+      settings = {
+        ["rust-analyzer"] = {
+          check = {
+            command = "clippy",
+          },
+          cargo = {
+            allFeatures = true,
+          },
+          procMacro = {
+            enable = true,
+          },
+        },
+      },
+    },
     clangd = {
       cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
       init_options = {
@@ -232,6 +247,11 @@ function M.config()
       end,
     },
   }
+
+  -- Setup rust_analyzer manually (installed via rustup, not Mason)
+  local rust_config = servers.rust_analyzer or {}
+  rust_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, rust_config.capabilities or {})
+  require('lspconfig').rust_analyzer.setup(rust_config)
 end
 
 return M
