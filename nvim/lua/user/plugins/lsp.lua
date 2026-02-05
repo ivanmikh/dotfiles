@@ -171,10 +171,9 @@ function M.config()
   --  - settings (table): Override the default settings passed when initializing the server.
   --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
   local servers = {
-    pyright = {},
+    -- pyright = {},
     mesonlsp = {},
     neocmake = {},
-    bashls = {},
     -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 
     clangd = {
@@ -199,6 +198,8 @@ function M.config()
       },
     },
   }
+  vim.lsp.enable('bashls')
+  vim.lsp.enable('pyright', false)
 
   -- Ensure the servers and tools above are installed
   --

@@ -5,6 +5,17 @@
       "alignment": "right",
       "segments": [
         {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "#8800dd",
+          "template": " {{ .FormattedMs }} <#757575,>|</> ",
+          "properties": {
+            "threshold": 500,
+            "style": "austin",
+            "always_enabled": true
+          }
+        },
+        {
           "foreground": "#007acc",
           "style": "plain",
           "template": "{{ .Name }}",
