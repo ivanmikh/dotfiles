@@ -90,5 +90,20 @@ if vim.g.neovide then
     vim.g.neovide_remember_window_size = true
 end
 
+-- Reload files changed outside of Neovim
+vim.opt.autoread = true
+
+-- Proactively check for changes when focusing/entering buffers or idling
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  command = "checktime",
+})
+
+-- Optional: notify when a file changed
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  callback = function()
+    vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
+  end,
+})
+
 -- TODO: move to plugins init
 vim.g.github_enterprise_urls = { 'https://github.schneider-electric.com' }
