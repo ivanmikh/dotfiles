@@ -55,5 +55,9 @@ family = "Hack"
 hide_when_typing = true
 
 [window]
-decorations = "none"
-startup_mode = "Maximized"
+decorations = "Full"
+startup_mode = "Windowed"
+#opacity = 0.8
+
+[shell]
+program="fm"

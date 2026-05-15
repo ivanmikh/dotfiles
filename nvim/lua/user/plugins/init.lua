@@ -17,6 +17,7 @@ return {
   require("user.plugins.lsp"),
   require("user.plugins.lualine"),
   require("user.plugins.markdown-toc"),
+  require("user.plugins.mason"),
   require("user.plugins.neo-tree"),
   require("user.plugins.outline"),
   require("user.plugins.telescope"),
@@ -28,18 +29,6 @@ return {
   --require("user.plugins.gitsigns"),
   --require("user.plugins.neogit"),
 
-  {
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
-    'folke/lazydev.nvim',
-    ft = 'lua',
-    opts = {
-      library = {
-        -- Load luvit types when the `vim.uv` word is found
-        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-      },
-    },
-  },
   {
     "christoomey/vim-tmux-navigator",
     cmd = {

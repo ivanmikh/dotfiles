@@ -21,8 +21,8 @@ set ifs "\n"
 #set cursorpreviewfmt "\033[7;2m"
 
 # Common paths
-map gd cd ~/dev
-map gD cd ~/downloads
+map gd cd ~/Documents
+map gD cd ~/Downloads
 map g/ cd /
 map gt cd /tmp
 map gm cd /mnt
