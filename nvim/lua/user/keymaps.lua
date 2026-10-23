@@ -7,11 +7,15 @@ local cmd = vim.api.nvim_create_user_command
 -- Clear highlights on search when pressing <Esc> in normal mode
 keymap('n', '<Esc>', '<cmd>nohlsearch<CR>', opts)
 
--- Move between splits
-keymap('n', '<M-h>', '<C-w><C-h>', opts)
-keymap('n', '<M-l>', '<C-w><C-l>', opts)
-keymap('n', '<M-j>', '<C-w><C-j>', opts)
-keymap('n', '<M-k>', '<C-w><C-k>', opts)
+-- Move between splits (and tmux panes). tmux forwards M-<hjkl> verbatim, so the
+-- terminal-mode variant escapes to normal mode first instead of hijacking C-h.
+for key, dir in pairs({ h = 'Left', j = 'Down', k = 'Up', l = 'Right' }) do
+  keymap('n', '<M-' .. key .. '>', '<cmd>TmuxNavigate' .. dir .. '<CR>', opts)
+  keymap('t', '<M-' .. key .. '>', '<C-\\><C-N><cmd>TmuxNavigate' .. dir .. '<CR>', opts)
+end
+
+-- In terminal
+keymap('t', '<M-\\>', '<C-\\><C-N>', opts)
 
 -- Move vertically by visual line
 keymap('n', 'j', 'gj', opts)
@@ -26,10 +30,10 @@ keymap('v', 'x', '"_x', opts)
 keymap('n', 'x', '"_x', opts)
 
 -- Resize with Alt+Shift+<key>
-keymap("n", "<A-S-k>", ":resize -2<CR>", opts)
-keymap("n", "<A-S-j>", ":resize +2<CR>", opts)
-keymap("n", "<A-S-h>", ":vertical resize -2<CR>", opts)
-keymap("n", "<A-S-l>", ":vertical resize +2<CR>", opts)
+keymap("n", "<M-K>", ":resize -2<CR>", opts)
+keymap("n", "<M-J>", ":resize +2<CR>", opts)
+keymap("n", "<M-H>", ":vertical resize -2<CR>", opts)
+keymap("n", "<M-L>", ":vertical resize +2<CR>", opts)
 
 -- Stay in indent mode
 keymap("v", "<", "<gv^", opts)
@@ -44,14 +48,18 @@ keymap('n', ']T', ':tablast<CR>', opts)
 -- List buffers
 keymap('n', 'gb', ':ls<CR>:b<space>', { noremap = true } )
 
--- Resize with Alt+Shift+<key>
-keymap("n", "<A-S-k>", ":resize -2<CR>", opts)
-keymap("n", "<A-S-j>", ":resize +2<CR>", opts)
-keymap("n", "<A-S-h>", ":vertical resize -2<CR>", opts)
-keymap("n", "<A-S-l>", ":vertical resize +2<CR>", opts)
-
 -- Commands
 cmd('CopyAbsPath', ':let @+ = expand("%:p")', {})
 cmd('CopyRelPath', ':let @+ = expand("%:f")', {})
 cmd('CopyFilename', ':let @+ = expand("%:t")', {})
+cmd('CopyForClaude', function(o)
+  local ref = '@' .. vim.fn.expand('%:.') .. '#L' .. o.line1
+  if o.line2 ~= o.line1 then ref = ref .. '-' .. o.line2 end
+  vim.fn.setreg('+', ref)
+  vim.notify('Copied ' .. ref)
+end, { range = true })
 
+-- Copy keymaps
+keymap('v', '<leader>yc', ':CopyForClaude<CR>', opts)
+keymap('n', '<leader>yr', ':CopyRelPath<CR>', opts)
+keymap('n', '<leader>ya', ':CopyAbsPath<CR>', opts)

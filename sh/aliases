@@ -1,7 +1,12 @@
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto --group-directories-first'
+    # uutils ls ignores sort order with --group-directories-first; prefer GNU
+    if command -v gnuls >/dev/null 2>&1; then
+        alias ls='gnuls --color=auto --group-directories-first'
+    else
+        alias ls='ls --color=auto --group-directories-first'
+    fi
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -28,7 +33,7 @@ alias la='ls -vFlAh'
 alias l='ls -vCF'
 
 alias del=trash
-alias sudo='sudo '
+#alias sudo='sudo '
 
 alias wttr='curl http://wttr.in/Vancouver'
 
@@ -45,6 +50,7 @@ lfcd () {
 eval "$(zoxide init zsh)"
 
 source ~/.profile
+source ~/Documents/code/heron-link-docker-toolchain/local/heron-aliases.sh
 
 # Add this to /etc/environment to fix blurry text in web browsers
 # FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"

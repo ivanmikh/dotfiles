@@ -103,6 +103,14 @@
           "style": "powerline",
           "template": " error ",
           "type": "status"
+        },
+        {
+          "type": "python",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#ffd43b",
+          "background": "#306998",
+          "template": "  venv "
         }
       ],
       "type": "prompt"

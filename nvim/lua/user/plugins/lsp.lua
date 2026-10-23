@@ -158,7 +158,7 @@ function M.config()
 
   vim.lsp.config.clangd = {
     capabilities = capabilities,
-    cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+    cmd = {'clangd', '--background-index', '--clang-tidy'},
     init_options = {
       -- fallbackFlags = { '-std=c++17' },
     },

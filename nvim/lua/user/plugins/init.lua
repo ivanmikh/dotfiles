@@ -7,12 +7,14 @@ return {
   'tpope/vim-fugitive',   -- Git plugin
   'airblade/vim-gitgutter', -- Git diff in sign column
   'junegunn/gv.vim',        -- Git commit history
+  'sindrets/diffview.nvim', -- Git rich diff view
   'tpope/vim-rhubarb',    -- GitHub commands (GBrowse)
 
   'tpope/vim-sleuth',     -- Detect tabstop and shiftwidth automatically
   'tpope/vim-unimpaired', -- ][ shortcuts
 
   require("user.plugins.autocompletion"),
+  require("user.plugins.claudecode"),
   require("user.plugins.comment"),
   require("user.plugins.lsp"),
   require("user.plugins.lualine"),

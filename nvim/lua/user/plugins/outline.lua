@@ -33,7 +33,7 @@ function M.config()
 
         -- Auto close the outline window if goto_location is triggered and not for
         -- peek_location
-        auto_close = false,
+        auto_close = true,
         -- Automatically scroll to the location in code when navigating outline window.
         auto_jump = false,
         -- boolean or integer for milliseconds duration to apply a temporary highlight
@@ -176,7 +176,7 @@ function M.config()
         -- Jump to symbol under cursor but keep focus on outline window.
         peek_location = 'o',
         -- Visit location in code and close outline immediately
-        goto_and_close = 'O',
+        goto_and_close = '<Cr>',
         -- Change cursor position of outline window to match current location in code.
         -- 'Opposite' of goto/peek_location.
         restore_location = '<C-g>',

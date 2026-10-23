@@ -7,7 +7,7 @@ local M = {
 }
 
 function M.config()
-  local servers = {}
+  local servers = { "lua_ls", "pyright", "bashls" }
 
   require("mason").setup {
     ui = {

@@ -67,6 +67,10 @@ vim.opt.inccommand = 'split' -- preview substitutions live
 vim.opt.path = '**'  -- recursive search
 vim.opt.wildmenu = true -- nice way to show search results
 
+-- Global as grep
+vim.opt.grepprg='global --result=grep -x'
+vim.opt.grepformat='%f:%l:%m'
+
 -- Scroll bind horizaontally
 vim.opt.scrollopt = 'hor,ver,jump'
 
